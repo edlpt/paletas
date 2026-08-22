@@ -131,8 +131,8 @@ function ProductDetail() {
 
       {/* Overlapping Image */}
       <div className="absolute top-[18vh] left-[-15%] w-[75%] max-w-[320px] z-30 pointer-events-none">
-        {/* Fake shadow for performance instead of CSS drop-shadow on alpha mask */}
-        <div className="absolute top-[10%] left-[10%] w-[90%] h-[90%] bg-black/80 blur-2xl rounded-full rotate-12 scale-125 pointer-events-none" />
+        {/* Fake shadow tightly fitted to avoid covering the price text on the right */}
+        <div className="absolute top-[20%] left-[20%] w-[50%] h-[60%] bg-black/60 blur-xl rounded-[100px] rotate-12 pointer-events-none" />
         <img
           src={product.imageUrl}
           alt={product.name}
