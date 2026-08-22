@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { NeonButton } from "@/components/brand/NeonButton";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { MOCK_PRODUCTS } from "@/lib/products";
 
 export const Route = createFileRoute("/product/$id")({
   component: ProductDetail,
@@ -16,19 +17,12 @@ function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // Mock data for UI
-  const product = {
-    id,
-    name: "Lemon Haze",
-    category: "Sativa",
-    family: "Premium",
-    price: 60000,
-    thc: 22,
-    cbd: 2,
-    weight: 1,
-    imageUrl: "/Flower-Gelato.png",
-    description: "Aroma cítrico, efecto creativo y energía mental. Cultivada orgánicamente en la región antioqueña.",
-  };
+  // Fetch product based on ID, fallback to Gelato if not found
+  const product = useMemo(() => {
+    const found = MOCK_PRODUCTS.find(p => p.id === id);
+    if (found) return found;
+    return MOCK_PRODUCTS[1]; // default to Gelato
+  }, [id]);
 
   const cartItemCount = items.length;
 
@@ -54,9 +48,8 @@ function ProductDetail() {
     <div className="flex min-h-screen flex-col bg-background pb-32 overflow-x-hidden relative">
       
       {/* Top Background Area */}
-      <div className="relative w-full rounded-b-[40px] bg-gradient-to-t from-lime/30 via-[#2f1342] to-[#3b125b] pt-safe pb-20 overflow-hidden">
-        {/* Subtle dark overlay for better contrast */}
-        <div className="absolute inset-0 bg-black/20" />
+      {/* A lighter gradient that blends nicely with neon green */}
+      <div className="relative w-full rounded-b-[40px] bg-gradient-to-br from-lime/20 via-[#1A3320] to-[#121212] pt-safe pb-20 overflow-hidden border-b border-lime/10 shadow-glow-sm">
         
         {/* Header Navigation */}
         <div className="relative z-20 flex items-center justify-between p-5">
@@ -67,20 +60,20 @@ function ProductDetail() {
             <span className="text-3xl font-bold">&lt;</span>
           </button>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <button 
               onClick={() => setIsFavorite(!isFavorite)}
               className="flex h-10 w-10 items-center justify-center active:scale-95 transition-transform"
             >
-              <img src={isFavorite ? "/27_icon_heart_filled.png" : "/28_icon_heart_outline.png"} alt="Fav" className="w-6 h-6 invert opacity-90" />
+              <img src={isFavorite ? "/27_icon_heart_filled.png" : "/28_icon_heart_outline.png"} alt="Fav" className="w-6 h-6 invert opacity-100 drop-shadow-sm" />
             </button>
             <button 
               onClick={() => navigate({ to: "/cart" })} 
               className="relative flex h-10 w-10 items-center justify-center active:scale-95 transition-transform"
             >
-              <img src="/22_icon_bag.png" alt="Cart" className="w-6 h-6 invert opacity-90" />
+              <img src="/22_icon_bag.png" alt="Cart" className="w-6 h-6 invert opacity-100 drop-shadow-sm" />
               {cartItemCount > 0 && (
-                <span className="absolute top-1 right-1 flex h-2.5 w-2.5 rounded-full bg-red-500 border border-white" />
+                <span className="absolute top-1 right-1 flex h-3 w-3 rounded-full bg-lime border-2 border-black" />
               )}
             </button>
           </div>
@@ -88,7 +81,7 @@ function ProductDetail() {
 
         {/* Product Info (Right aligned) */}
         <div className="relative z-20 flex flex-col items-end px-6 mt-2 text-right">
-          <h1 className="text-3xl font-bold text-white max-w-[65%] leading-tight drop-shadow-md">
+          <h1 className="text-3xl font-bold text-white max-w-[60%] leading-tight drop-shadow-md">
             {product.name}
           </h1>
           
@@ -99,7 +92,7 @@ function ProductDetail() {
             ))}
           </div>
 
-          {/* Type & Family */}
+          {/* Tipo & Familia */}
           <div className="flex items-center justify-end gap-4 mb-6">
             <div className="flex flex-col items-start border-l border-white/30 pl-3">
               <span className="text-[10px] text-white/70 uppercase tracking-wider">Tipo</span>
@@ -112,22 +105,17 @@ function ProductDetail() {
             <span className="text-2xl text-white font-light ml-1">)</span>
           </div>
 
-          {/* Price */}
-          <div className="flex items-center justify-end gap-3 mb-4">
+          {/* Precio */}
+          <div className="flex items-center justify-end gap-3 mb-3">
             <span className="text-lg text-white/80 font-light">Precio</span>
             <span className="text-3xl font-bold text-white drop-shadow-md">${product.price.toLocaleString("es-CO")}</span>
           </div>
 
-          {/* Quantity Selector under price */}
-          <div className="flex justify-end mb-6">
-             <div className="flex items-center gap-4 rounded-full bg-white/10 backdrop-blur px-3 py-1 border border-white/20">
-               <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="flex h-6 w-6 items-center justify-center opacity-80 active:scale-95 transition-transform">
-                 <span className="text-white font-bold">-</span>
-               </button>
-               <span className="text-sm font-bold text-white w-4 text-center">{quantity}</span>
-               <button onClick={() => setQuantity(quantity + 1)} className="flex h-6 w-6 items-center justify-center opacity-80 active:scale-95 transition-transform">
-                 <span className="text-white font-bold">+</span>
-               </button>
+          {/* Contenido info where the old +/- was */}
+          <div className="flex justify-end mb-4">
+             <div className="flex items-center gap-2 rounded-full bg-black/30 backdrop-blur px-4 py-1.5 border border-white/10">
+               <span className="text-[11px] text-muted-foreground uppercase tracking-wider">Contenido</span>
+               <span className="text-sm font-bold text-lime">{product.weight} {product.weight === 1 ? 'gramo' : 'gramos'}</span>
              </div>
           </div>
         </div>
@@ -168,9 +156,9 @@ function ProductDetail() {
 
         {/* Pagination Dots (Left aligned under image space) */}
         <div className="absolute bottom-40 left-10 flex items-center gap-3">
-          <div className="w-1.5 h-1.5 rounded-full border border-muted-foreground"></div>
-          <div className="w-1.5 h-1.5 rounded-full bg-foreground"></div>
-          <div className="w-1.5 h-1.5 rounded-full border border-muted-foreground"></div>
+          <div className="w-1.5 h-1.5 rounded-full border border-lime shadow-[0_0_5px_var(--lime)] bg-lime/20"></div>
+          <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground"></div>
+          <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground"></div>
         </div>
 
         {/* Description */}
@@ -182,17 +170,31 @@ function ProductDetail() {
       </div>
 
       {/* Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 w-full bg-background p-5 pb-safe z-50">
+      <div className="fixed bottom-0 left-0 w-full bg-surface p-5 pb-safe z-50 border-t border-border flex items-center gap-3">
+        
+        {/* Quantity Selector - Moved here */}
+        <div className="flex items-center gap-4 rounded-[1rem] bg-surface-2 px-3 h-14 border border-white/5 shadow-inner">
+          <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="flex h-8 w-8 items-center justify-center opacity-80 active:scale-95 transition-transform">
+            <img src="/26_icon_minus.png" className="w-3 h-3" alt="-" />
+          </button>
+          <span className="text-base font-bold text-foreground w-4 text-center">{quantity}</span>
+          <button onClick={() => setQuantity(quantity + 1)} className="flex h-8 w-8 items-center justify-center opacity-80 active:scale-95 transition-transform">
+            <img src="/25_icon_plus.png" className="w-3 h-3" alt="+" />
+          </button>
+        </div>
+
+        {/* Add to Cart Button */}
         <NeonButton 
           size="lg" 
           onClick={handleAddToCart}
-          className="w-full h-14 text-sm font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.3)] rounded-2xl"
+          className="flex-1 h-14 text-sm font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.3)] rounded-[1rem]"
         >
           <div className="flex items-center justify-center gap-2">
             <img src="/22_icon_bag.png" className="w-4 h-4" alt="Cart" />
-            <span className="text-base uppercase tracking-wide">Agregar al Carrito</span>
+            <span className="text-sm uppercase tracking-wide">Agregar al Carrito</span>
           </div>
         </NeonButton>
+
       </div>
     </div>
   );

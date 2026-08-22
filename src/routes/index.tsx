@@ -3,6 +3,7 @@ import { PsychedelicBanner } from "@/components/brand/PsychedelicBanner";
 import { CategoryBubble } from "@/components/brand/CategoryBubble";
 import { ProductCard } from "@/components/brand/ProductCard";
 import { useState } from "react";
+import { MOCK_PRODUCTS } from "@/lib/products";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -15,72 +16,6 @@ const CATEGORIES = [
   { id: "4", name: "Edibles", icon: "/05_category_edibles.png" },
   { id: "5", name: "Accesorios", icon: "/06_category_accesorios.png" },
   { id: "6", name: "Otros", icon: "/09_cookies.png" },
-];
-
-const MOCK_PRODUCTS = [
-  {
-    id: "1",
-    name: "Jar Goat x 3gr",
-    category: "Flores",
-    price: 150000,
-    imageUrl: "/indor.png",
-    categoryId: "1",
-    isAvailable: true,
-  },
-  {
-    id: "2",
-    name: "Gelato",
-    category: "Flores",
-    price: 10000,
-    imageUrl: "/Flower-Gelato.png",
-    categoryId: "1",
-    isAvailable: true,
-  },
-  {
-    id: "3",
-    name: "Passion",
-    category: "Flores",
-    price: 10000,
-    imageUrl: "/pasion.png",
-    categoryId: "1",
-    isAvailable: true,
-  },
-  {
-    id: "4",
-    name: "Conos x10",
-    category: "Accesorios",
-    price: 150000,
-    imageUrl: "/06_category_accesorios.png",
-    categoryId: "5",
-    isAvailable: true,
-  },
-  {
-    id: "5",
-    name: "Armados x10",
-    category: "Pre-rolls",
-    price: 100000,
-    imageUrl: "/03_category_prerolls.png",
-    categoryId: "2",
-    isAvailable: true,
-  },
-  {
-    id: "6",
-    name: "Pre Roll",
-    category: "Pre-rolls",
-    price: 100000,
-    imageUrl: "/03_category_prerolls.png",
-    categoryId: "2",
-    isAvailable: true,
-  },
-  {
-    id: "7",
-    name: "Gomas x5 THC",
-    category: "Otros",
-    price: 70000,
-    imageUrl: "/09_cookies.png",
-    categoryId: "6",
-    isAvailable: true,
-  },
 ];
 
 function Index() {
