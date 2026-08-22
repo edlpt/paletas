@@ -117,8 +117,9 @@ function RootComponent() {
   const router = useRouter();
   
   // Hide bottom nav on specific routes
-  const hideBottomNavRoutes = ["/splash", "/login", "/register", "/age-gate"];
-  const showBottomNav = !hideBottomNavRoutes.includes(router.state.location.pathname);
+  const hideBottomNavRoutes = ["/splash", "/login", "/register", "/age-gate", "/cart", "/checkout"];
+  const pathname = router.state.location.pathname;
+  const showBottomNav = !hideBottomNavRoutes.includes(pathname) && !pathname.startsWith("/product") && !pathname.startsWith("/order");
 
   return (
     <QueryClientProvider client={queryClient}>

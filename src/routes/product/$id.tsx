@@ -65,7 +65,7 @@ function ProductDetail() {
       </div>
 
       {/* Image Area */}
-      <div className="relative h-[45vh] w-full bg-[image:var(--gradient-space)]">
+      <div className="relative h-[45vh] w-full bg-background">
         <div className="absolute inset-0 flex items-center justify-center p-8">
           <img
             src={product.imageUrl}

@@ -11,11 +11,7 @@ export function BottomNav() {
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex h-[88px] flex-col justify-end bg-background pb-safe">
-      {/* Top Slime Drip Edge */}
-      <div className="absolute top-0 left-0 w-full -mt-4 transform rotate-180 pointer-events-none">
-        <img src="/70_green_slime_bar.png" alt="Slime edge" className="w-full h-auto opacity-90" />
-      </div>
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex h-[88px] flex-col justify-end bg-background pb-safe border-t border-slime/30 shadow-[0_-10px_30px_rgba(57,255,20,0.1)]">
 
       <div className="flex h-[72px] items-center justify-around px-2 relative z-10">
         {NAV_ITEMS.map((item) => {
