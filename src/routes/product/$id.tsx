@@ -212,12 +212,12 @@ function ProductDetail() {
       <div className="fixed bottom-0 left-0 w-full bg-surface p-5 pb-safe z-50 border-t border-border flex items-center gap-4">
         
         {/* Quantity Selector */}
-        <div className="flex items-center gap-5 rounded-full bg-surface-2 px-5 h-16 border border-white/5 shadow-inner">
-          <button onClick={handleDecrease} className="flex h-12 w-12 items-center justify-center opacity-80 hover:opacity-100 active:scale-95 transition-all outline-none focus:outline-none">
+        <div className="flex items-center gap-3 rounded-full bg-surface-2 px-4 h-14 border border-white/5 shadow-inner shrink-0">
+          <button onClick={handleDecrease} className="flex h-10 w-10 items-center justify-center opacity-80 hover:opacity-100 active:scale-95 transition-all outline-none focus:outline-none">
             <img src="/26_icon_minus.png" className="w-6 h-6" alt="-" />
           </button>
           <span className="text-xl font-bold text-foreground w-6 text-center">{displayQuantity}</span>
-          <button onClick={handleIncrease} className="flex h-12 w-12 items-center justify-center opacity-80 hover:opacity-100 active:scale-95 transition-all outline-none focus:outline-none">
+          <button onClick={handleIncrease} className="flex h-10 w-10 items-center justify-center opacity-80 hover:opacity-100 active:scale-95 transition-all outline-none focus:outline-none">
             <img src="/25_icon_plus.png" className="w-6 h-6" alt="+" />
           </button>
         </div>
@@ -226,7 +226,7 @@ function ProductDetail() {
         <NeonButton 
           size="lg" 
           onClick={handleAddToCart}
-          className="flex-1 h-14 text-[16px] font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.4)] rounded-full tracking-normal"
+          className="flex-1 h-14 text-[16px] font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.4)] rounded-full tracking-normal whitespace-nowrap"
         >
           {isInCart ? "Ir al carrito" : "Agregar al Carrito"}
         </NeonButton>
