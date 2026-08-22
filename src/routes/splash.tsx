@@ -1,7 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { NeonButton } from "@/components/brand/NeonButton";
 import { SlimeDivider } from "@/components/brand/SlimeDivider";
-import { AlienIcon } from "@/components/brand/AlienIcon";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
@@ -58,10 +57,9 @@ function Splash() {
       
       {/* Bottom Text and Actions */}
       <div className="z-10 flex flex-col items-center w-full text-center pb-8">
-        <h2 className="text-lg text-foreground font-medium">Bienvenido a</h2>
-        <h1 className="text-2xl font-bold text-lime mb-8 drop-shadow-md uppercase tracking-wider">
-          EL DE LAS PALETAS
-        </h1>
+        <h2 className="text-2xl text-lime font-bold mb-8 uppercase tracking-wider drop-shadow-md">
+          Bienvenido
+        </h2>
 
         <div className="flex flex-col gap-4 w-full">
           <NeonButton 
@@ -72,7 +70,7 @@ function Splash() {
             Entrar
           </NeonButton>
           <Link to="/register" className="w-full">
-            <NeonButton variant="ghost" size="lg" className="w-full text-lg font-bold text-yellow-400 hover:text-yellow-300">
+            <NeonButton variant="ghost" size="lg" className="w-full text-lg font-bold text-lime hover:text-lime/80">
               Crear cuenta
             </NeonButton>
           </Link>
@@ -88,18 +86,18 @@ function Splash() {
           />
           <div className="relative w-full rounded-t-[2rem] bg-surface p-8 shadow-glow animate-in slide-in-from-bottom-full duration-300 border-t border-border">
             
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24">
-              <AlienIcon className="drop-shadow-[0_0_10px_var(--lime)]" />
+            <div className="absolute -top-14 left-1/2 -translate-x-1/2 w-28 h-28 pointer-events-none">
+              <img src="/14_alien_head.png" alt="Alien" className="w-full h-full object-contain animate-float drop-shadow-[0_0_15px_var(--slime)]" />
             </div>
 
             <h1 className="mt-8 mb-2 text-center font-bold text-2xl text-foreground">
               INICIAR SESIÓN
             </h1>
             <p className="mb-6 text-center text-sm text-muted-foreground">
-              Ingresa a tu portal espacial
+              Ingresar a la tienda
             </p>
 
-            <form onSubmit={handleLogin} className="flex flex-col gap-4">
+            <form onSubmit={handleLogin} className="flex flex-col gap-4 relative z-10">
               <div className="flex flex-col gap-1.5">
                 <label className="text-sm font-medium text-lime ml-1">Email</label>
                 <input 
@@ -130,14 +128,18 @@ function Splash() {
                 </button>
               </div>
 
-              <NeonButton type="submit" size="lg" className="mt-2 w-full text-black font-bold bg-lime border-none shadow-[0_0_15px_rgba(163,230,53,0.4)]" disabled={loading}>
-                {loading ? "ENTRANDO..." : "ENTRAR"}
-              </NeonButton>
+              <div className="mt-2 relative">
+                <NeonButton type="submit" size="lg" className="w-full text-black font-bold bg-lime border-none shadow-[0_0_15px_rgba(163,230,53,0.4)] relative z-10" disabled={loading}>
+                  {loading ? "ENTRANDO..." : "ENTRAR"}
+                </NeonButton>
+                {/* Slime divider attached to the bottom of the button */}
+                <div className="absolute -bottom-3.5 left-4 right-4 z-0 text-lime overflow-hidden">
+                  <SlimeDivider className="h-4 w-full opacity-100" />
+                </div>
+              </div>
             </form>
 
-            <SlimeDivider className="my-6 h-4 opacity-50" />
-
-            <p className="text-center text-sm text-muted-foreground pb-safe">
+            <p className="text-center text-sm text-muted-foreground pb-safe mt-10 relative z-10">
               ¿No tienes cuenta?{" "}
               <Link to="/register" className="font-bold text-lime hover:underline">
                 Regístrate
