@@ -14,6 +14,7 @@ const CATEGORIES = [
   { id: "3", name: "Concentrados", icon: "/04_category_concentrados.png" },
   { id: "4", name: "Edibles", icon: "/05_category_edibles.png" },
   { id: "5", name: "Accesorios", icon: "/06_category_accesorios.png" },
+  { id: "6", name: "Otros", icon: "/09_cookies.png" },
 ];
 
 const MOCK_PRODUCTS = [
@@ -22,7 +23,7 @@ const MOCK_PRODUCTS = [
     name: "Jar Goat x 3gr",
     category: "Flores",
     price: 150000,
-    imageUrl: "/08_tree_flower.png",
+    imageUrl: "/indor.png",
     categoryId: "1",
     isAvailable: true,
   },
@@ -31,7 +32,7 @@ const MOCK_PRODUCTS = [
     name: "Gelato",
     category: "Flores",
     price: 10000,
-    imageUrl: "/08_tree_flower.png",
+    imageUrl: "/gelato.png",
     categoryId: "1",
     isAvailable: true,
   },
@@ -40,7 +41,7 @@ const MOCK_PRODUCTS = [
     name: "Passion",
     category: "Flores",
     price: 10000,
-    imageUrl: "/08_tree_flower.png",
+    imageUrl: "/pasion.png",
     categoryId: "1",
     isAvailable: true,
   },
@@ -74,10 +75,10 @@ const MOCK_PRODUCTS = [
   {
     id: "7",
     name: "Gomas x5 THC",
-    category: "Edibles",
+    category: "Otros",
     price: 70000,
     imageUrl: "/09_cookies.png",
-    categoryId: "4",
+    categoryId: "6",
     isAvailable: true,
   },
 ];
