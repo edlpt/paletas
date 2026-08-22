@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   id: string;
@@ -16,6 +18,16 @@ export function ProductCard({
   price,
   imageUrl,
 }: ProductCardProps) {
+  const { addItem } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    addItem({ id, name, detail: category, price, imageUrl });
+    toast.success(`${name} agregado al carrito`, {
+      style: { background: "var(--surface)", border: "1px solid var(--lime)", color: "white" }
+    });
+  };
+
   return (
     <Link
       to={`/product/${id}`}
@@ -28,7 +40,7 @@ export function ProductCard({
         <img
           src={imageUrl}
           alt={name}
-          className="h-4/5 w-4/5 object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-lg"
+          className="h-full w-full p-2 object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-lg"
         />
       </div>
 
@@ -45,10 +57,7 @@ export function ProductCard({
             ${price.toLocaleString("es-CO")}
           </span>
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              // Add to cart logic
-            }}
+            onClick={handleAddToCart}
             className="flex h-8 w-8 items-center justify-center rounded-xl bg-[image:var(--gradient-slime)] text-black shadow-glow"
           >
             <img src="/25_icon_plus.png" className="w-4 h-4 opacity-80 mix-blend-multiply" alt="Add" />

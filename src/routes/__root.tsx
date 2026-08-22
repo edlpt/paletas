@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "@/components/brand/BottomNav";
 import { Toaster } from "sonner";
+import { CartProvider } from "@/contexts/CartContext";
 
 function NotFoundComponent() {
   return (
@@ -121,17 +122,19 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="relative flex min-h-screen flex-col bg-background text-foreground antialiased selection:bg-slime selection:text-primary-foreground pb-20">
-        {/* Background effects */}
-        <div className="pointer-events-none fixed inset-0 z-[-1] bg-[image:var(--gradient-space)] opacity-30 mix-blend-screen" />
-        
-        {/* App Content */}
-        <Outlet />
-        
-        {/* Global UI Elements */}
-        {showBottomNav && <BottomNav />}
-        <Toaster theme="dark" toastOptions={{ className: "border-slime/20 bg-surface text-foreground" }} />
-      </div>
+      <CartProvider>
+        <div className="relative flex min-h-screen flex-col bg-background text-foreground antialiased selection:bg-slime selection:text-primary-foreground pb-20">
+          {/* Background effects */}
+          <div className="pointer-events-none fixed inset-0 z-[-1] bg-[image:var(--gradient-space)] opacity-30 mix-blend-screen" />
+          
+          {/* App Content */}
+          <Outlet />
+          
+          {/* Global UI Elements */}
+          {showBottomNav && <BottomNav />}
+          <Toaster theme="dark" toastOptions={{ className: "border-slime/20 bg-surface text-foreground" }} />
+        </div>
+      </CartProvider>
     </QueryClientProvider>
   );
 }

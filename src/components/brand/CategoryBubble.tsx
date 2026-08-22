@@ -22,7 +22,7 @@ export function CategoryBubble({ name, iconUrl, active, onClick }: CategoryBubbl
           active ? "bg-[image:var(--gradient-slime)] opacity-100" : "bg-surface-2 opacity-60 hover:opacity-80"
         )}
       >
-        <img src={iconUrl} alt={name} className="h-10 w-10 object-contain drop-shadow-md" />
+        <img src={iconUrl} alt={name} className="h-full w-full object-contain p-2 drop-shadow-md" />
       </div>
       <span
         className={cn(

@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { NeonButton } from "@/components/brand/NeonButton";
 import { useState } from "react";
+import { useCart } from "@/contexts/CartContext";
 
 const PAYMENT_METHODS = [
   { id: "card", name: "Tarjeta de crédito", detail: "**** **** **** 4242", icon: "/33_icon_card.png" },
@@ -15,14 +16,22 @@ export const Route = createFileRoute("/checkout")({
 
 function Checkout() {
   const navigate = useNavigate();
+  const { total, clearCart } = useCart();
   const [step, setStep] = useState<"payment" | "success">("payment");
   const [selectedMethod, setSelectedMethod] = useState(PAYMENT_METHODS[0].id);
+  const [finalTotal, setFinalTotal] = useState(0);
+
+  const handlePay = () => {
+    setFinalTotal(total);
+    clearCart();
+    setStep("success");
+  };
 
   if (step === "success") {
     return (
       <div className="flex min-h-screen flex-col bg-background relative pb-32">
-        <div className="absolute top-0 left-0 w-full h-16 z-0">
-          <img src="/70_green_slime_bar.png" alt="Slime" className="w-full h-full object-cover opacity-90" />
+        <div className="absolute top-0 left-0 w-full z-0 pointer-events-none">
+          <img src="/70_green_slime_bar.png" alt="Slime" className="w-full h-auto opacity-90" />
         </div>
         
         <header className="relative z-10 flex items-center justify-center py-4 pt-safe mb-8">
@@ -46,14 +55,14 @@ function Checkout() {
           </p>
 
           <div className="w-full rounded-[2rem] bg-surface-2 p-6 border border-slime/20 mb-8">
-            <h3 className="font-bold text-foreground mb-4">Pedido #42069</h3>
+            <h3 className="font-bold text-foreground mb-4">Pedido #{Math.floor(Math.random() * 90000) + 10000}</h3>
             <div className="flex justify-between text-sm mb-2">
               <span className="text-muted-foreground">Fecha</span>
-              <span className="text-foreground">22 de mayo, 2024</span>
+              <span className="text-foreground">{new Date().toLocaleDateString("es-CO", { day: '2-digit', month: 'short', year: 'numeric' })}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Total</span>
-              <span className="font-bold text-lime">$125.000</span>
+              <span className="font-bold text-lime">${finalTotal.toLocaleString("es-CO")}</span>
             </div>
             <div className="mt-4 pt-4 border-t border-border">
               <p className="text-xs text-center text-muted-foreground">Enviaremos los detalles a tu email.</p>
@@ -123,10 +132,11 @@ function Checkout() {
       <div className="fixed bottom-0 left-0 w-full bg-surface-2 px-5 py-6 pb-safe border-t border-border">
         <NeonButton 
           size="lg" 
-          onClick={() => setStep("success")}
-          className="w-full text-lg font-bold bg-lime text-black border-none py-4"
+          onClick={handlePay}
+          className="w-full text-lg font-bold bg-lime text-black border-none py-4 disabled:opacity-50"
+          disabled={total === 0}
         >
-          Pagar $125.000
+          Pagar ${total.toLocaleString("es-CO")}
         </NeonButton>
       </div>
     </div>

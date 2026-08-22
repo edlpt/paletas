@@ -13,8 +13,8 @@ export function BottomNav() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 flex h-[88px] flex-col justify-end bg-background pb-safe">
       {/* Top Slime Drip Edge */}
-      <div className="absolute top-0 left-0 w-full h-8 -mt-6">
-        <img src="/70_green_slime_bar.png" alt="Slime edge" className="w-full h-full object-cover opacity-90" />
+      <div className="absolute top-0 left-0 w-full -mt-4 transform rotate-180 pointer-events-none">
+        <img src="/70_green_slime_bar.png" alt="Slime edge" className="w-full h-auto opacity-90" />
       </div>
 
       <div className="flex h-[72px] items-center justify-around px-2 relative z-10">

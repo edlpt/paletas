@@ -1,6 +1,8 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { NeonButton } from "@/components/brand/NeonButton";
 import { useState } from "react";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/product/$id")({
   component: ProductDetail,
@@ -9,11 +11,13 @@ export const Route = createFileRoute("/product/$id")({
 function ProductDetail() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
+  const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // Mock data for UI
+  // Mock data for UI - in a real app this would be fetched based on the ID
   const product = {
+    id,
     name: "Lemon Haze",
     category: "Flor Sativa",
     price: 60000,
@@ -22,6 +26,26 @@ function ProductDetail() {
     weight: 1,
     imageUrl: "/08_tree_flower.png",
     description: "Aroma cítrico, efecto creativo y energía mental. Cultivada orgánicamente en la región antioqueña.",
+  };
+
+  const handleAddToCart = () => {
+    // Add the item multiple times if quantity > 1, 
+    // since our context adds 1 by 1 and merges them
+    for(let i = 0; i < quantity; i++) {
+      addItem({
+        id: product.id,
+        name: product.name,
+        detail: product.category,
+        price: product.price,
+        imageUrl: product.imageUrl
+      });
+    }
+    
+    toast.success(`${quantity}x ${product.name} al carrito`, {
+      style: { background: "var(--surface)", border: "1px solid var(--lime)", color: "white" }
+    });
+    
+    navigate({ to: "/cart" });
   };
 
   return (
@@ -91,17 +115,17 @@ function ProductDetail() {
       </div>
 
       {/* Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 w-full bg-surface-2 p-5 pb-safe border-t border-border">
+      <div className="fixed bottom-0 left-0 w-full bg-surface-2 p-5 pb-safe border-t border-border z-50">
         {/* Quantity Selector */}
         <div className="mb-4 flex items-center justify-center">
-          <div className="flex items-center gap-6 rounded-full bg-background px-4 py-2 border border-slime/20">
+          <div className="flex items-center gap-6 rounded-full bg-background px-4 py-2 border border-slime/20 shadow-glow">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
               className="flex h-8 w-8 items-center justify-center active:scale-95 opacity-80"
             >
               <img src="/26_icon_minus.png" alt="Menos" className="w-4 h-4" />
             </button>
-            <span className="w-8 text-center text-lg font-bold text-foreground">{quantity}g</span>
+            <span className="w-8 text-center text-lg font-bold text-foreground">{quantity}</span>
             <button
               onClick={() => setQuantity(quantity + 1)}
               className="flex h-8 w-8 items-center justify-center active:scale-95 opacity-80"
@@ -111,11 +135,13 @@ function ProductDetail() {
           </div>
         </div>
 
-        <Link to="/cart" className="block w-full">
-          <NeonButton size="lg" className="w-full text-lg font-bold bg-lime text-black border-none py-4">
-            Agregar al carrito
-          </NeonButton>
-        </Link>
+        <NeonButton 
+          size="lg" 
+          onClick={handleAddToCart}
+          className="w-full text-lg font-bold bg-lime text-black border-none py-4"
+        >
+          Agregar al carrito - ${(product.price * quantity).toLocaleString("es-CO")}
+        </NeonButton>
       </div>
     </div>
   );

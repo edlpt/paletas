@@ -16,8 +16,8 @@ function Profile() {
   return (
     <div className="flex min-h-screen flex-col bg-background pb-32 relative">
       {/* Top Slime */}
-      <div className="absolute top-0 left-0 w-full h-16 z-0">
-        <img src="/70_green_slime_bar.png" alt="Slime" className="w-full h-full object-cover opacity-90" />
+      <div className="absolute top-0 left-0 w-full z-0 pointer-events-none">
+        <img src="/70_green_slime_bar.png" alt="Slime" className="w-full h-auto opacity-90" />
       </div>
 
       <header className="relative z-10 flex items-center justify-center p-4 pt-safe mb-4">
