@@ -32,7 +32,7 @@ const MOCK_PRODUCTS = [
     name: "Gelato",
     category: "Flores",
     price: 10000,
-    imageUrl: "/gelato.png",
+    imageUrl: "/Flower-Gelato.png",
     categoryId: "1",
     isAvailable: true,
   },

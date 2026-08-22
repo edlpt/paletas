@@ -36,11 +36,12 @@ export function ProductCard({
       <div className="absolute inset-0 bg-[image:var(--gradient-space)] opacity-10" />
       
       {/* Product Image */}
-      <div className="relative mb-3 aspect-square w-full overflow-hidden rounded-2xl bg-surface-2 flex items-center justify-center">
+      <div className="relative mb-3 aspect-square w-full overflow-hidden rounded-2xl bg-gradient-to-br from-[#3b125b] to-[#193b22] flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/20" /> {/* Subtle darkening */}
         <img
           src={imageUrl}
           alt={name}
-          className="h-full w-full p-2 object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-lg"
+          className="relative z-10 h-full w-full p-2 object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-2xl"
         />
       </div>
 

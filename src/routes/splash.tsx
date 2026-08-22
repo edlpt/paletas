@@ -19,7 +19,7 @@ function Splash() {
       {/* Astronaut Alien */}
       <div className="z-10 flex-1 flex items-center justify-center w-full max-w-[300px]">
         <img 
-          src="/13_alien_astronaut.png" 
+          src="/13_alien_astronaut .png" 
           alt="Alien Astronaut" 
           className="w-full h-auto animate-float drop-shadow-2xl" 
         />
