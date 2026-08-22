@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { SlimeDrip } from "@/components/brand/SlimeDrip";
+
 export const Route = createFileRoute("/profile")({
   component: Profile,
 });
@@ -16,8 +18,8 @@ function Profile() {
   return (
     <div className="flex min-h-screen flex-col bg-background pb-32 relative">
       {/* Top Slime */}
-      <div className="absolute top-0 left-0 w-full h-24 z-0 pointer-events-none overflow-hidden">
-        <img src="/70_green_slime_bar.png" alt="Slime" className="w-full h-[150%] object-cover object-bottom opacity-90 -mt-4" />
+      <div className="absolute top-0 left-0 w-full z-0 pointer-events-none">
+        <SlimeDrip className="h-16" />
       </div>
 
       <header className="relative z-10 flex items-center justify-center p-4 pt-safe mb-4">
@@ -55,7 +57,7 @@ function Profile() {
             <Link
               key={item.id}
               to={item.to}
-              className="flex items-center gap-4 rounded-2xl bg-surface-2 p-4 transition-colors hover:bg-surface-2/80 border border-border"
+              className="flex items-center gap-4 rounded-2xl bg-surface-2 p-4 transition-colors hover:bg-surface-2/80 border border-border shadow-glow-sm"
             >
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-background border border-slime/20">
                 <img src={item.icon} alt={item.label} className="w-5 h-5 opacity-80" />
@@ -64,6 +66,16 @@ function Profile() {
               <span className="text-muted-foreground text-xl">&gt;</span>
             </Link>
           ))}
+          
+          <Link
+            to="/splash"
+            className="flex items-center gap-4 rounded-2xl bg-surface-2 p-4 transition-colors hover:bg-red-500/10 border border-red-500/20 mt-4 shadow-[0_0_15px_rgba(239,68,68,0.1)]"
+          >
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-500/10 text-red-500 font-bold">
+              ✕
+            </div>
+            <span className="flex-1 font-medium text-red-500">Cerrar sesión</span>
+          </Link>
         </div>
       </div>
     </div>

@@ -11,9 +11,8 @@ export function BottomNav() {
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex h-[88px] flex-col justify-end bg-background pb-safe border-t border-slime/30 shadow-[0_-10px_30px_rgba(57,255,20,0.1)]">
-
-      <div className="flex h-[72px] items-center justify-around px-2 relative z-10">
+    <nav className="fixed bottom-6 left-4 right-4 z-50 flex h-[72px] flex-col justify-center rounded-[2rem] bg-surface-2/90 backdrop-blur-md border border-slime/30 shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_15px_rgba(57,255,20,0.15)] overflow-hidden">
+      <div className="flex h-full items-center justify-around px-2 relative z-10">
         {NAV_ITEMS.map((item) => {
           const isActive = location.pathname === item.to || (item.to !== "/" && location.pathname.startsWith(item.to));
           return (
