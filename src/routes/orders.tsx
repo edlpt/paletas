@@ -39,7 +39,7 @@ function Orders() {
     <div className="flex min-h-screen flex-col bg-background pb-32">
       <header className="flex items-center justify-center relative py-4 pt-safe mb-4">
         <button
-          onClick={() => navigate({ to: "/profile" })}
+          onClick={() => navigate({ to: "/" })}
           className="absolute left-4 flex h-10 w-10 items-center justify-center text-foreground"
         >
           <span className="text-xl font-bold">&lt;</span>

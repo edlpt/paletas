@@ -13,7 +13,7 @@ export const Route = createFileRoute("/product/$id")({
 function ProductDetail() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
-  const { addItem, items } = useCart();
+  const { addItem, items, updateQuantity, removeItem } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -24,9 +24,37 @@ function ProductDetail() {
     return MOCK_PRODUCTS[1]; // default to Gelato
   }, [id]);
 
-  const cartItemCount = items.length;
+  const cartItemCount = items.reduce((acc, item) => acc + item.quantity, 0);
+  const cartItem = items.find(i => i.id === product.id);
+  const isInCart = !!cartItem;
+  const displayQuantity = isInCart ? cartItem.quantity : quantity;
+
+  const handleDecrease = () => {
+    if (isInCart) {
+      if (cartItem.quantity > 1) {
+        updateQuantity(product.id, -1);
+      } else {
+        removeItem(product.id);
+      }
+    } else {
+      setQuantity(Math.max(1, quantity - 1));
+    }
+  };
+
+  const handleIncrease = () => {
+    if (isInCart) {
+      updateQuantity(product.id, 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
 
   const handleAddToCart = () => {
+    if (isInCart) {
+      navigate({ to: "/cart" });
+      return;
+    }
+
     for(let i = 0; i < quantity; i++) {
       addItem({
         id: product.id,
@@ -37,11 +65,12 @@ function ProductDetail() {
       });
     }
     
+    setQuantity(1);
+    
     toast.success(`${quantity}x ${product.name} al carrito`, {
       style: { background: "var(--surface)", border: "1px solid var(--lime)", color: "white" }
     });
     
-    navigate({ to: "/cart" });
   };
 
   return (
@@ -183,13 +212,13 @@ function ProductDetail() {
       <div className="fixed bottom-0 left-0 w-full bg-surface p-5 pb-safe z-50 border-t border-border flex items-center gap-4">
         
         {/* Quantity Selector */}
-        <div className="flex items-center gap-5 rounded-full bg-surface-2 px-5 h-14 border border-white/5 shadow-inner">
-          <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="flex h-10 w-10 items-center justify-center opacity-80 hover:opacity-100 active:scale-95 transition-all outline-none focus:outline-none">
-            <img src="/26_icon_minus.png" className="w-4 h-4" alt="-" />
+        <div className="flex items-center gap-5 rounded-full bg-surface-2 px-5 h-16 border border-white/5 shadow-inner">
+          <button onClick={handleDecrease} className="flex h-12 w-12 items-center justify-center opacity-80 hover:opacity-100 active:scale-95 transition-all outline-none focus:outline-none">
+            <img src="/26_icon_minus.png" className="w-6 h-6" alt="-" />
           </button>
-          <span className="text-lg font-bold text-foreground w-4 text-center">{quantity}</span>
-          <button onClick={() => setQuantity(quantity + 1)} className="flex h-10 w-10 items-center justify-center opacity-80 hover:opacity-100 active:scale-95 transition-all outline-none focus:outline-none">
-            <img src="/25_icon_plus.png" className="w-4 h-4" alt="+" />
+          <span className="text-xl font-bold text-foreground w-6 text-center">{displayQuantity}</span>
+          <button onClick={handleIncrease} className="flex h-12 w-12 items-center justify-center opacity-80 hover:opacity-100 active:scale-95 transition-all outline-none focus:outline-none">
+            <img src="/25_icon_plus.png" className="w-6 h-6" alt="+" />
           </button>
         </div>
 
@@ -199,7 +228,7 @@ function ProductDetail() {
           onClick={handleAddToCart}
           className="flex-1 h-14 text-[16px] font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.4)] rounded-full tracking-normal"
         >
-          Agregar al Carrito
+          {isInCart ? "Ir al carrito" : "Agregar al Carrito"}
         </NeonButton>
 
       </div>

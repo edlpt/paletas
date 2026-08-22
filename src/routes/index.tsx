@@ -23,7 +23,7 @@ function Index() {
   const [activeCategoryId, setActiveCategoryId] = useState("1");
   const navigate = useNavigate();
   const { items } = useCart();
-  const cartItemCount = items.length;
+  const cartItemCount = items.reduce((acc, item) => acc + item.quantity, 0);
   
   const filteredProducts = MOCK_PRODUCTS.filter(
     p => p.categoryId === activeCategoryId
