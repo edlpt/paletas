@@ -1,48 +1,69 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { NeonButton } from "@/components/brand/NeonButton";
-import { ChevronLeft, CreditCard, Wallet, Banknote, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+
+const PAYMENT_METHODS = [
+  { id: "card", name: "Tarjeta de crédito", detail: "**** **** **** 4242", icon: "/33_icon_card.png" },
+  { id: "nequi", name: "Nequi", detail: "312 **** 5678", icon: "/48_payment_nequi.png" },
+  { id: "daviplata", name: "Daviplata", detail: "312 **** 5678", icon: "/49_payment_daviplata.png" },
+  { id: "cash", name: "Efectivo", detail: "Pago contra entrega", icon: "/50_payment_cash.png" },
+];
 
 export const Route = createFileRoute("/checkout")({
   component: Checkout,
 });
 
 function Checkout() {
+  const navigate = useNavigate();
   const [step, setStep] = useState<"payment" | "success">("payment");
+  const [selectedMethod, setSelectedMethod] = useState(PAYMENT_METHODS[0].id);
 
   if (step === "success") {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-background px-6">
-        <div className="absolute inset-0 z-0 bg-[image:var(--gradient-space)] mix-blend-screen opacity-40" />
+      <div className="flex min-h-screen flex-col bg-background relative pb-32">
+        <div className="absolute top-0 left-0 w-full h-16 z-0">
+          <img src="/70_green_slime_bar.png" alt="Slime" className="w-full h-full object-cover opacity-90" />
+        </div>
         
-        <div className="z-10 w-full max-w-sm rounded-[2rem] bg-surface p-8 shadow-card border border-slime text-center animate-pop">
-          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-slime/20 shadow-glow">
-            <CheckCircle2 className="h-10 w-10 text-slime" />
+        <header className="relative z-10 flex items-center justify-center py-4 pt-safe mb-8">
+          <button
+            onClick={() => navigate({ to: "/" })}
+            className="absolute left-4 flex h-10 w-10 items-center justify-center text-foreground"
+          >
+            <span className="text-xl font-bold">&lt;</span>
+          </button>
+        </header>
+
+        <div className="flex-1 flex flex-col items-center justify-center px-5">
+          <div className="relative mb-6">
+            <div className="absolute inset-0 bg-lime opacity-30 blur-2xl rounded-full" />
+            <img src="/76_check_green.png" alt="Check" className="relative w-24 h-24 drop-shadow-[0_0_15px_var(--lime)]" />
           </div>
           
-          <h1 className="font-graffiti text-3xl text-slime text-glow mb-2">
-            ¡Pedido confirmado!
-          </h1>
-          
-          <p className="mb-8 text-sm text-muted-foreground">
-            Gracias por tu compra.<br />
-            Estamos preparando tu pedido.
+          <h2 className="text-2xl font-bold text-lime mb-2 text-center drop-shadow-md">¡Pedido confirmado!</h2>
+          <p className="text-center text-muted-foreground mb-8 text-sm max-w-[250px]">
+            Gracias por tu compra. Estamos preparando tu pedido.
           </p>
 
-          <div className="rounded-xl bg-surface-2 p-4 text-left mb-8 border border-border">
-            <p className="text-sm font-bold text-foreground mb-1">Pedido #42069</p>
-            <div className="flex justify-between text-xs text-muted-foreground mt-2">
-              <span>Fecha</span>
-              <span>{new Date().toLocaleDateString("es-CO")}</span>
+          <div className="w-full rounded-[2rem] bg-surface-2 p-6 border border-slime/20 mb-8">
+            <h3 className="font-bold text-foreground mb-4">Pedido #42069</h3>
+            <div className="flex justify-between text-sm mb-2">
+              <span className="text-muted-foreground">Fecha</span>
+              <span className="text-foreground">22 de mayo, 2024</span>
             </div>
-            <div className="flex justify-between text-sm font-bold text-lime mt-2 pt-2 border-t border-border">
-              <span>Total</span>
-              <span>$125.000</span>
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Total</span>
+              <span className="font-bold text-lime">$125.000</span>
+            </div>
+            <div className="mt-4 pt-4 border-t border-border">
+              <p className="text-xs text-center text-muted-foreground">Enviaremos los detalles a tu email.</p>
             </div>
           </div>
+        </div>
 
-          <Link to="/orders">
-            <NeonButton size="lg" className="w-full">
+        <div className="fixed bottom-0 left-0 w-full p-5 pb-safe bg-surface-2 border-t border-border">
+          <Link to="/orders" className="block w-full">
+            <NeonButton size="lg" className="w-full text-lg font-bold bg-lime text-black border-none py-4">
               Ir a mis pedidos
             </NeonButton>
           </Link>
@@ -52,64 +73,59 @@ function Checkout() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col pt-safe px-4 pb-24 bg-background">
-      <header className="flex items-center gap-4 py-4">
-        <Link to="/cart" className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2 text-foreground hover:bg-surface-2/80">
-          <ChevronLeft size={24} />
-        </Link>
-        <h1 className="text-xl font-bold text-foreground">Métodos de pago</h1>
+    <div className="flex min-h-screen flex-col bg-background pb-32">
+      <header className="flex items-center justify-center relative py-4 pt-safe mb-4">
+        <button
+          onClick={() => navigate({ to: "/cart" })}
+          className="absolute left-4 flex h-10 w-10 items-center justify-center text-foreground"
+        >
+          <span className="text-xl font-bold">&lt;</span>
+        </button>
+        <h1 className="text-lg font-bold text-foreground">Métodos de pago</h1>
       </header>
 
-      <div className="mt-6 flex flex-col gap-4">
-        {/* Payment Option 1 */}
-        <label className="flex cursor-pointer items-center justify-between rounded-2xl border-2 border-slime bg-surface p-4 shadow-glow">
-          <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-2">
-              <CreditCard className="text-lime" />
-            </div>
-            <div>
-              <p className="font-bold text-foreground">Tarjeta de crédito</p>
-              <p className="text-xs text-muted-foreground">**** **** **** 4242</p>
-            </div>
-          </div>
-          <div className="h-5 w-5 rounded-full border-2 border-slime bg-slime" />
-        </label>
-
-        {/* Payment Option 2 */}
-        <label className="flex cursor-pointer items-center justify-between rounded-2xl border border-border bg-surface p-4 opacity-70">
-          <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-2">
-              <Wallet className="text-psy" />
-            </div>
-            <div>
-              <p className="font-bold text-foreground">Nequi</p>
-              <p className="text-xs text-muted-foreground">312 **** 5678</p>
-            </div>
-          </div>
-          <div className="h-5 w-5 rounded-full border-2 border-muted-foreground" />
-        </label>
-
-        {/* Payment Option 3 */}
-        <label className="flex cursor-pointer items-center justify-between rounded-2xl border border-border bg-surface p-4 opacity-70">
-          <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-2">
-              <Banknote className="text-yellow-500" />
-            </div>
-            <div>
-              <p className="font-bold text-foreground">Efectivo</p>
-              <p className="text-xs text-muted-foreground">Pago contra entrega</p>
-            </div>
-          </div>
-          <div className="h-5 w-5 rounded-full border-2 border-muted-foreground" />
-        </label>
+      <div className="flex-1 px-5">
+        <div className="flex flex-col gap-4">
+          {PAYMENT_METHODS.map((method) => (
+            <button
+              key={method.id}
+              onClick={() => setSelectedMethod(method.id)}
+              className={`flex items-center gap-4 rounded-[2rem] p-4 border transition-all ${
+                selectedMethod === method.id 
+                  ? "bg-surface border-lime" 
+                  : "bg-surface-2 border-border opacity-70 hover:opacity-100"
+              }`}
+            >
+              <div className="h-10 w-10 shrink-0 flex items-center justify-center">
+                <img src={method.icon} alt={method.name} className="w-8 h-8 object-contain" />
+              </div>
+              
+              <div className="flex-1 text-left flex flex-col">
+                <span className="font-bold text-foreground text-sm">{method.name}</span>
+                <span className="text-xs text-muted-foreground">{method.detail}</span>
+              </div>
+              
+              <div className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${
+                selectedMethod === method.id ? "border-lime" : "border-muted-foreground"
+              }`}>
+                {selectedMethod === method.id && <div className="h-2.5 w-2.5 rounded-full bg-lime" />}
+              </div>
+            </button>
+          ))}
+        </div>
+        
+        <button className="mt-6 flex items-center justify-center gap-2 w-full py-4 border border-dashed border-muted-foreground rounded-[2rem] text-muted-foreground hover:text-lime hover:border-lime transition-colors">
+          <span className="font-bold text-sm">Agregar método</span>
+          <img src="/25_icon_plus.png" className="w-4 h-4 opacity-70" alt="Add" />
+        </button>
       </div>
 
-      <NeonButton variant="outline" className="mt-6 border-dashed" onClick={() => {}}>
-        + Agregar método
-      </NeonButton>
-
-      <div className="mt-auto pt-8">
-        <NeonButton size="lg" className="w-full" onClick={() => setStep("success")}>
+      <div className="fixed bottom-0 left-0 w-full bg-surface-2 px-5 py-6 pb-safe border-t border-border">
+        <NeonButton 
+          size="lg" 
+          onClick={() => setStep("success")}
+          className="w-full text-lg font-bold bg-lime text-black border-none py-4"
+        >
           Pagar $125.000
         </NeonButton>
       </div>

@@ -1,93 +1,76 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronLeft, MapPin, Package, Truck, CheckCircle2 } from "lucide-react";
-import { SlimeDivider } from "@/components/brand/SlimeDivider";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/order/$id/tracking")({
   component: OrderTracking,
 });
 
-const TRACKING_STEPS = [
-  { id: 1, label: "Pedido confirmado", icon: CheckCircle2, completed: true, time: "10:30 AM" },
-  { id: 2, label: "Preparando", icon: Package, completed: true, time: "10:45 AM" },
-  { id: 3, label: "En camino", icon: Truck, completed: false, time: null },
-  { id: 4, label: "Entregado", icon: MapPin, completed: false, time: null },
-];
-
 function OrderTracking() {
   const { id } = Route.useParams();
+  const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen flex-col pt-safe px-4 pb-24 bg-background">
-      <header className="flex items-center gap-4 py-4">
-        <Link to="/orders" className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2 text-foreground hover:bg-surface-2/80">
-          <ChevronLeft size={24} />
-        </Link>
-        <div>
-          <h1 className="text-xl font-bold text-foreground">Seguimiento</h1>
-          <p className="text-xs text-muted-foreground">Pedido #{id}</p>
-        </div>
+    <div className="flex min-h-screen flex-col pt-safe px-5 pb-8 bg-background">
+      <header className="flex items-center justify-center relative py-4 mb-8">
+        <button
+          onClick={() => navigate({ to: "/orders" })}
+          className="absolute left-0 flex h-10 w-10 items-center justify-center text-foreground"
+        >
+          <span className="text-xl font-bold">&lt;</span>
+        </button>
+        <h1 className="text-lg font-bold text-foreground">Seguimiento</h1>
       </header>
 
-      {/* Map Placeholder */}
-      <div className="mt-4 h-64 w-full overflow-hidden rounded-3xl bg-surface-2 relative border border-slime/20 shadow-glow">
-        <div className="absolute inset-0 bg-[image:var(--gradient-space)] opacity-30 mix-blend-screen" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <MapPin className="mx-auto h-8 w-8 text-slime animate-bounce mb-2" />
-            <p className="text-sm font-medium text-foreground">El repartidor está en camino...</p>
-            <p className="text-xs text-lime">Tiempo estimado: 15 min</p>
+      {/* Main Status Text */}
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-lime mb-2 drop-shadow-[0_0_15px_rgba(183,255,0,0.4)]">En camino</h2>
+        <p className="text-sm text-muted-foreground">Tu pedido está en camino</p>
+      </div>
+
+      {/* Map Graphic Area */}
+      <div className="relative flex-1 flex flex-col items-center justify-center min-h-[300px] mb-8">
+        <div className="relative w-full max-w-[280px]">
+          <img src="/61_tracking_line.png" alt="Ruta" className="w-full h-auto drop-shadow-[0_0_10px_var(--lime)]" />
+          
+          <img 
+            src="/60_tracking_pin.png" 
+            alt="Origen" 
+            className="absolute top-[-10%] right-[15%] w-10 h-10"
+          />
+          
+          <div className="absolute bottom-[-10%] left-[10%] bg-surface-2 rounded-full p-2 border border-slime">
+            <img 
+              src="/62_tracking_alien.png" 
+              alt="Repartidor" 
+              className="w-8 h-8 animate-pulse-glow"
+            />
           </div>
         </div>
       </div>
 
-      <div className="mt-8 rounded-3xl bg-surface p-6 shadow-card border border-psy/20">
-        <h3 className="mb-6 text-lg font-bold text-foreground">Estado del pedido</h3>
-        
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-[19px] top-4 bottom-4 w-[2px] bg-border" />
-          
-          <div className="flex flex-col gap-6">
-            {TRACKING_STEPS.map((step, index) => {
-              const isLast = index === TRACKING_STEPS.length - 1;
-              return (
-                <div key={step.id} className="relative z-10 flex gap-4">
-                  <div 
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 ${
-                      step.completed 
-                        ? "border-slime bg-slime text-primary-foreground shadow-glow" 
-                        : "border-border bg-surface-2 text-muted-foreground"
-                    }`}
-                  >
-                    <step.icon size={18} />
-                  </div>
-                  
-                  <div className="flex flex-1 flex-col justify-center">
-                    <p className={`font-medium ${step.completed ? "text-foreground" : "text-muted-foreground"}`}>
-                      {step.label}
-                    </p>
-                    {step.time && (
-                      <p className="text-xs text-muted-foreground mt-0.5">{step.time}</p>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+      {/* Bottom Info Card */}
+      <div className="rounded-[2rem] bg-surface-2 p-6 border border-slime/20">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-lg font-bold text-foreground">Pedido #{id}</h3>
+          <span className="text-xl text-muted-foreground font-bold">&gt;</span>
         </div>
-      </div>
-      
-      <SlimeDivider className="my-8 h-4 opacity-30" />
-      
-      {/* Delivery details */}
-      <div className="rounded-2xl bg-surface-2 p-4 border border-border">
-        <div className="flex items-center gap-4">
-          <div className="h-12 w-12 rounded-full bg-surface border border-slime/20 flex items-center justify-center">
-             <span className="text-xl">👽</span>
-          </div>
+        <p className="text-lime font-bold mb-6">Llega en 15 min</p>
+        
+        <div className="flex flex-col gap-4 text-sm">
           <div>
-            <p className="font-bold text-foreground">Alien Express (Repartidor)</p>
-            <p className="text-sm text-muted-foreground">Placas: UFO-420</p>
+            <p className="text-muted-foreground mb-1">Dirección</p>
+            <p className="text-foreground">El Poblado, Medellín</p>
+          </div>
+          
+          <div className="flex items-center justify-between mt-2 pt-4 border-t border-border">
+            <div>
+              <p className="text-muted-foreground mb-1">Mensajero</p>
+              <p className="text-foreground">Juan Esteban</p>
+            </div>
+            
+            <button className="flex items-center gap-2 bg-background px-4 py-2 rounded-full border border-slime/20">
+              <img src="/69_contact.png" alt="Contactar" className="w-5 h-5" />
+              <span className="font-bold text-foreground text-xs">Contactar</span>
+            </button>
           </div>
         </div>
       </div>

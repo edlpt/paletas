@@ -1,7 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronLeft, Share2, Heart, Star, Info } from "lucide-react";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { NeonButton } from "@/components/brand/NeonButton";
-import { QuantitySelector } from "@/components/brand/QuantitySelector";
 import { useState } from "react";
 
 export const Route = createFileRoute("/product/$id")({
@@ -10,105 +8,114 @@ export const Route = createFileRoute("/product/$id")({
 
 function ProductDetail() {
   const { id } = Route.useParams();
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // Mock product data
+  // Mock data for UI
   const product = {
-    id,
-    name: "Lemon Haze Premium",
+    name: "Lemon Haze",
     category: "Flor Sativa",
     price: 60000,
     thc: 22,
     cbd: 2,
-    weight: 3.5,
-    description: "Una variedad sativa energizante con un perfil de terpenos cítricos. Perfecta para la creatividad y actividades diurnas. Cultivada orgánicamente en la región antioqueña.",
-    imageUrl: "/placeholder.png",
-    rating: 4.8,
-    reviews: 124
+    weight: 1,
+    imageUrl: "/08_tree_flower.png",
+    description: "Aroma cítrico, efecto creativo y energía mental. Cultivada orgánicamente en la región antioqueña.",
   };
 
   return (
     <div className="flex min-h-screen flex-col bg-background pb-24">
-      {/* Product Image Header */}
-      <div className="relative h-80 w-full bg-surface-2">
-        <div className="absolute inset-0 bg-[image:var(--gradient-space)] mix-blend-screen opacity-50" />
-        <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" />
+      {/* Header / Nav */}
+      <div className="absolute top-0 left-0 w-full z-10 flex items-center justify-between p-5 pt-safe">
+        <button
+          onClick={() => navigate({ to: "/" })}
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2/80 backdrop-blur"
+        >
+          <span className="text-xl font-bold">&lt;</span>
+        </button>
         
-        {/* Top actions */}
-        <div className="absolute left-4 right-4 top-safe pt-4 flex justify-between">
-          <Link to="/" className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2/80 text-foreground backdrop-blur-md">
-            <ChevronLeft size={24} />
-          </Link>
-          <div className="flex gap-2">
-            <button className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2/80 text-foreground backdrop-blur-md">
-              <Share2 size={20} />
-            </button>
-            <button 
-              onClick={() => setIsFavorite(!isFavorite)}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2/80 backdrop-blur-md transition-colors"
-            >
-              <Heart size={20} className={isFavorite ? "fill-psy text-psy" : "text-foreground"} />
-            </button>
-          </div>
-        </div>
+        <button onClick={() => setIsFavorite(!isFavorite)} className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2/80 backdrop-blur">
+          <img src={isFavorite ? "/27_icon_heart_filled.png" : "/28_icon_heart_outline.png"} alt="Favorito" className="w-5 h-5" />
+        </button>
       </div>
 
-      <div className="px-4 py-6">
+      {/* Image Area */}
+      <div className="relative h-[45vh] w-full bg-[image:var(--gradient-space)]">
+        <div className="absolute inset-0 flex items-center justify-center p-8">
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="h-full w-full object-contain drop-shadow-2xl animate-float"
+          />
+        </div>
+        {/* Curved fade into content */}
+        <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-background to-transparent" />
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 px-5 pt-2">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm font-bold text-psy">{product.category}</p>
-            <h1 className="mt-1 font-graffiti text-3xl text-foreground text-glow">{product.name}</h1>
+            <h1 className="text-3xl font-bold text-foreground">{product.name}</h1>
+            <p className="text-sm text-muted-foreground">{product.category}</p>
           </div>
-          <div className="flex flex-col items-end">
-            <span className="text-2xl font-bold text-lime">${product.price.toLocaleString("es-CO")}</span>
-            <div className="mt-1 flex items-center gap-1 text-sm text-yellow-500">
-              <Star size={14} className="fill-yellow-500" />
-              <span className="font-bold">{product.rating}</span>
-              <span className="text-muted-foreground">({product.reviews})</span>
-            </div>
-          </div>
+          <p className="text-2xl font-bold text-lime mt-1">
+            ${product.price.toLocaleString("es-CO")}
+          </p>
         </div>
 
-        {/* Specs */}
-        <div className="mt-6 flex gap-4">
-          <div className="flex flex-1 flex-col items-center justify-center rounded-2xl bg-surface p-3 border border-slime/20">
-            <span className="text-xs text-muted-foreground">THC</span>
-            <span className="text-lg font-bold text-foreground">{product.thc}%</span>
+        {/* Stats */}
+        <div className="mt-6 flex gap-3">
+          <div className="flex-1 rounded-2xl border border-slime/20 bg-surface-2 p-3 text-center">
+            <p className="text-xs text-muted-foreground">THC</p>
+            <p className="text-base font-bold text-foreground">{product.thc}%</p>
           </div>
-          <div className="flex flex-1 flex-col items-center justify-center rounded-2xl bg-surface p-3 border border-slime/20">
-            <span className="text-xs text-muted-foreground">CBD</span>
-            <span className="text-lg font-bold text-foreground">{product.cbd}%</span>
+          <div className="flex-1 rounded-2xl border border-slime/20 bg-surface-2 p-3 text-center">
+            <p className="text-xs text-muted-foreground">CBD</p>
+            <p className="text-base font-bold text-foreground">{product.cbd}%</p>
           </div>
-          <div className="flex flex-1 flex-col items-center justify-center rounded-2xl bg-surface p-3 border border-slime/20">
-            <span className="text-xs text-muted-foreground">Peso</span>
-            <span className="text-lg font-bold text-foreground">{product.weight}g</span>
+          <div className="flex-1 rounded-2xl border border-slime/20 bg-surface-2 p-3 text-center">
+            <p className="text-xs text-muted-foreground">Peso</p>
+            <p className="text-base font-bold text-foreground">{product.weight}g</p>
           </div>
         </div>
 
         {/* Description */}
         <div className="mt-8">
-          <h3 className="mb-2 text-lg font-bold text-foreground">Descripción</h3>
-          <p className="text-muted-foreground leading-relaxed">
+          <h3 className="text-lg font-bold text-foreground mb-2">Descripción</h3>
+          <p className="text-sm leading-relaxed text-muted-foreground">
             {product.description}
           </p>
-        </div>
-        
-        {/* Legal Warning */}
-        <div className="mt-6 flex items-start gap-3 rounded-xl bg-surface-2 p-4 text-xs text-muted-foreground border border-border">
-          <Info size={16} className="shrink-0 text-yellow-500 mt-0.5" />
-          <p>Producto regulado exclusivo para mayores de edad. El consumo responsable es tu responsabilidad.</p>
         </div>
       </div>
 
       {/* Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-surface/90 pb-safe pt-4 backdrop-blur-md px-4 pb-6">
-        <div className="flex items-center gap-4">
-          <QuantitySelector value={quantity} onChange={setQuantity} />
-          <NeonButton className="flex-1" size="lg" onClick={() => {}}>
-            Añadir al carrito
-          </NeonButton>
+      <div className="fixed bottom-0 left-0 w-full bg-surface-2 p-5 pb-safe border-t border-border">
+        {/* Quantity Selector */}
+        <div className="mb-4 flex items-center justify-center">
+          <div className="flex items-center gap-6 rounded-full bg-background px-4 py-2 border border-slime/20">
+            <button
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              className="flex h-8 w-8 items-center justify-center active:scale-95 opacity-80"
+            >
+              <img src="/26_icon_minus.png" alt="Menos" className="w-4 h-4" />
+            </button>
+            <span className="w-8 text-center text-lg font-bold text-foreground">{quantity}g</span>
+            <button
+              onClick={() => setQuantity(quantity + 1)}
+              className="flex h-8 w-8 items-center justify-center active:scale-95 opacity-80"
+            >
+              <img src="/25_icon_plus.png" alt="Más" className="w-4 h-4" />
+            </button>
+          </div>
         </div>
+
+        <Link to="/cart" className="block w-full">
+          <NeonButton size="lg" className="w-full text-lg font-bold bg-lime text-black border-none py-4">
+            Agregar al carrito
+          </NeonButton>
+        </Link>
       </div>
     </div>
   );

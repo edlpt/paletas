@@ -1,48 +1,51 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
-import { AlienIcon } from "@/components/brand/AlienIcon";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { NeonButton } from "@/components/brand/NeonButton";
 
 export const Route = createFileRoute("/splash")({
   component: Splash,
 });
 
 function Splash() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Redirect to age-gate after 2.5 seconds
-    const timer = setTimeout(() => {
-      navigate({ to: "/age-gate" });
-    }, 2500);
-    return () => clearTimeout(timer);
-  }, [navigate]);
-
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen flex-col items-center justify-between bg-background px-6 py-12 relative overflow-hidden">
       {/* Glow background */}
-      <div className="absolute inset-0 z-0 bg-[image:var(--gradient-space)] mix-blend-screen opacity-60 animate-pulse-glow" />
+      <div className="absolute inset-0 z-0 bg-[image:var(--gradient-space)] mix-blend-screen opacity-60" />
       
-      <div className="z-10 flex flex-col items-center animate-pop">
-        {/* Placeholder for real logo or alien */}
-        <div className="relative mb-6 h-32 w-32 drop-shadow-[0_0_20px_var(--slime)]">
-           <AlienIcon className="h-full w-full text-slime" />
-        </div>
-        
-        <h1 className="font-graffiti text-5xl text-slime text-center text-glow mb-2">
-          El De Las
-          <br />
-          Paleta$
+      {/* Logo */}
+      <div className="z-10 mt-8 w-full max-w-[280px]">
+        <img src="/01_logo.png" alt="El De Las Paletas" className="w-full h-auto drop-shadow-[0_0_15px_var(--slime)]" />
+      </div>
+
+      {/* Astronaut Alien */}
+      <div className="z-10 flex-1 flex items-center justify-center w-full max-w-[300px]">
+        <img 
+          src="/13_alien_astronaut.png" 
+          alt="Alien Astronaut" 
+          className="w-full h-auto animate-float drop-shadow-2xl" 
+        />
+      </div>
+      
+      {/* Bottom Text and Actions */}
+      <div className="z-10 flex flex-col items-center w-full text-center pb-8">
+        <h2 className="text-lg text-foreground font-medium">Bienvenido a</h2>
+        <h1 className="text-2xl font-bold text-lime mb-2 drop-shadow-md">
+          El De Las Paletas
         </h1>
-        
-        {/* Slime loader */}
-        <div className="mt-8 flex gap-2">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className="h-3 w-3 rounded-full bg-slime animate-drip"
-              style={{ animationDelay: `${i * 0.15}s` }}
-            />
-          ))}
+        <p className="text-sm text-muted-foreground mb-8 max-w-[220px]">
+          Tu espacio legal, seguro y 100% real.
+        </p>
+
+        <div className="flex flex-col gap-4 w-full">
+          <Link to="/login" className="w-full">
+            <NeonButton size="lg" className="w-full text-lg font-bold bg-lime text-black border-none shadow-[0_0_20px_-5px_var(--lime)] hover:bg-lime/90">
+              Entrar
+            </NeonButton>
+          </Link>
+          <Link to="/register" className="w-full">
+            <NeonButton variant="ghost" size="lg" className="w-full text-lg font-bold text-yellow-400 hover:text-yellow-300">
+              Crear cuenta
+            </NeonButton>
+          </Link>
         </div>
       </div>
     </div>

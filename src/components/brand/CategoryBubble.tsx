@@ -1,42 +1,37 @@
-import { Link } from "@tanstack/react-router";
-import { art } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
-export function CategoryBubble({
-  slug,
-  name,
-  iconKey,
-  active = false,
-}: {
-  slug: string;
+interface CategoryBubbleProps {
   name: string;
-  iconKey?: string | null;
+  iconUrl: string;
   active?: boolean;
-}) {
+  onClick?: () => void;
+}
+
+export function CategoryBubble({ name, iconUrl, active, onClick }: CategoryBubbleProps) {
   return (
-    <Link
-      to="/explorar"
-      search={{ cat: slug }}
-      className="press flex w-[74px] shrink-0 flex-col items-center gap-2"
+    <button
+      onClick={onClick}
+      className={cn(
+        "flex min-w-[80px] flex-col items-center gap-2",
+        "press transition-all duration-300"
+      )}
     >
-      <span
+      <div
         className={cn(
-          "grid size-[58px] place-items-center rounded-full border bg-[radial-gradient(circle_at_30%_20%,var(--psy-deep),var(--surface))] p-2",
-          active
-            ? "border-slime shadow-[0_0_20px_-4px_var(--slime)]"
-            : "border-slime/25 shadow-[0_0_18px_-10px_var(--slime)]",
+          "flex h-16 w-16 items-center justify-center rounded-[24px] border border-slime/20 shadow-glow transition-all duration-300",
+          active ? "bg-[image:var(--gradient-slime)] opacity-100" : "bg-surface-2 opacity-60 hover:opacity-80"
         )}
       >
-        <img
-          src={art(iconKey)}
-          alt=""
-          width={44}
-          height={44}
-          loading="lazy"
-          className="size-full object-contain"
-        />
+        <img src={iconUrl} alt={name} className="h-10 w-10 object-contain drop-shadow-md" />
+      </div>
+      <span
+        className={cn(
+          "text-xs font-semibold",
+          active ? "text-lime" : "text-muted-foreground"
+        )}
+      >
+        {name}
       </span>
-      <span className="text-center text-[11px] leading-tight text-muted-foreground">{name}</span>
-    </Link>
+    </button>
   );
 }

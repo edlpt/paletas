@@ -1,47 +1,60 @@
 import { Link } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
-import { art, money } from "@/lib/brand";
-import type { Product } from "@/lib/api";
+import { cn } from "@/lib/utils";
+
+interface ProductCardProps {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  imageUrl: string;
+}
 
 export function ProductCard({
-  product,
-  onAdd,
-}: {
-  product: Product;
-  onAdd?: (product: Product) => void;
-}) {
+  id,
+  name,
+  category,
+  price,
+  imageUrl,
+}: ProductCardProps) {
   return (
-    <div className="card-dark press relative overflow-hidden p-3">
-      <Link
-        to="/producto/$slug"
-        params={{ slug: product.slug }}
-        className="block"
-        aria-label={product.name}
-      >
-        <div className="relative grid h-28 place-items-center overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_50%_40%,var(--psy-deep),transparent_70%)]">
-          <img
-            src={art(product.image_key)}
-            alt={product.name}
-            width={200}
-            height={200}
-            loading="lazy"
-            className="size-24 object-contain drop-shadow-[0_0_18px_rgba(160,255,0,0.35)]"
-          />
-        </div>
-        <h3 className="mt-3 truncate text-sm font-semibold">{product.name}</h3>
-        <p className="truncate text-xs text-muted-foreground">{product.subtitle}</p>
-      </Link>
-      <div className="mt-2 flex items-center justify-between">
-        <span className="text-sm font-bold text-slime">${money(product.price)}</span>
-        <button
-          type="button"
-          aria-label={`Agregar ${product.name} al carrito`}
-          onClick={() => onAdd?.(product)}
-          className="press grid size-8 place-items-center rounded-xl bg-[image:var(--gradient-slime)] text-primary-foreground shadow-[0_0_18px_-6px_var(--slime)]"
-        >
-          <Plus className="size-4" />
-        </button>
+    <Link
+      to={`/product/${id}`}
+      className="press group relative flex flex-col overflow-hidden rounded-[2rem] bg-surface p-4 shadow-card border border-slime/20"
+    >
+      <div className="absolute inset-0 bg-[image:var(--gradient-space)] opacity-10" />
+      
+      {/* Product Image */}
+      <div className="relative mb-3 aspect-square w-full overflow-hidden rounded-2xl bg-surface-2 flex items-center justify-center">
+        <img
+          src={imageUrl}
+          alt={name}
+          className="h-4/5 w-4/5 object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-lg"
+        />
       </div>
-    </div>
+
+      {/* Product Info */}
+      <div className="relative z-10 flex flex-col flex-1">
+        <h3 className="text-sm font-bold text-foreground leading-tight">{name}</h3>
+        <p className="mt-1 text-xs text-muted-foreground flex items-center gap-1">
+          {category} 
+          {category.includes("THC") && <img src="/76_check_green.png" className="w-3 h-3" alt="Verificado" />}
+        </p>
+        
+        <div className="mt-auto pt-3 flex items-center justify-between">
+          <span className="text-base font-bold text-lime">
+            ${price.toLocaleString("es-CO")}
+          </span>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              // Add to cart logic
+            }}
+            className="flex h-8 w-8 items-center justify-center rounded-xl bg-[image:var(--gradient-slime)] text-black shadow-glow"
+          >
+            <img src="/25_icon_plus.png" className="w-4 h-4 opacity-80 mix-blend-multiply" alt="Add" />
+          </button>
+        </div>
+      </div>
+    </Link>
   );
 }

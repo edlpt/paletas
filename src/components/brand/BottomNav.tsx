@@ -1,37 +1,49 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Home, Search, ShoppingBag, ClipboardList, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { icon: Home, label: "Inicio", to: "/" },
-  { icon: Search, label: "Explorar", to: "/search" },
-  { icon: ShoppingBag, label: "Carrito", to: "/cart" },
-  { icon: ClipboardList, label: "Pedidos", to: "/orders" },
-  { icon: User, label: "Perfil", to: "/profile" },
+  { icon: "/18_cannabis_leaf.png", label: "Inicio", to: "/" },
+  { icon: "/22_icon_bag.png", label: "Pedidos", to: "/orders" },
+  { icon: "/23_icon_user.png", label: "Perfil", to: "/profile" },
 ];
 
 export function BottomNav() {
-  // TanStack Router's useLocation hook
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex h-20 items-center justify-around border-t border-slime/20 bg-surface/90 pb-safe backdrop-blur-md">
-      {NAV_ITEMS.map((item) => {
-        const isActive = location.pathname === item.to;
-        return (
-          <Link
-            key={item.to}
-            to={item.to}
-            className={cn(
-              "flex flex-col items-center justify-center gap-1 transition-all duration-300",
-              isActive ? "text-slime scale-110 drop-shadow-[0_0_8px_var(--slime)]" : "text-muted-foreground hover:text-slime/70"
-            )}
-          >
-            <item.icon size={24} strokeWidth={isActive ? 2.5 : 2} />
-            <span className="text-[10px] font-medium tracking-wider">{item.label}</span>
-          </Link>
-        );
-      })}
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex h-[88px] flex-col justify-end bg-background pb-safe">
+      {/* Top Slime Drip Edge */}
+      <div className="absolute top-0 left-0 w-full h-8 -mt-6">
+        <img src="/70_green_slime_bar.png" alt="Slime edge" className="w-full h-full object-cover opacity-90" />
+      </div>
+
+      <div className="flex h-[72px] items-center justify-around px-2 relative z-10">
+        {NAV_ITEMS.map((item) => {
+          const isActive = location.pathname === item.to || (item.to !== "/" && location.pathname.startsWith(item.to));
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              className={cn(
+                "flex flex-col items-center justify-center p-2 transition-all duration-300",
+                isActive ? "scale-110 drop-shadow-[0_0_10px_var(--lime)] opacity-100" : "opacity-50 hover:opacity-80"
+              )}
+            >
+              <img 
+                src={item.icon} 
+                alt={item.label} 
+                className={cn("h-8 w-8 object-contain mb-1", isActive ? "" : "filter grayscale")} 
+              />
+              <span className={cn(
+                "text-[10px] font-bold tracking-wider",
+                isActive ? "text-lime" : "text-muted-foreground"
+              )}>
+                {item.label}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
     </nav>
   );
 }
