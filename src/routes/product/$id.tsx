@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { NeonButton } from "@/components/brand/NeonButton";
 import { useState, useMemo } from "react";
 import { useCart } from "@/contexts/CartContext";
@@ -53,19 +53,21 @@ function ProductDetail() {
         
         {/* Header Navigation */}
         <div className="relative z-20 flex items-center justify-between p-5">
-          <button
-            onClick={() => navigate({ to: "/" })}
+          <Link
+            to="/"
             className="flex h-10 w-10 items-center justify-start text-white active:scale-95 transition-transform outline-none focus:outline-none focus:ring-0"
           >
             <span className="text-3xl font-bold">&lt;</span>
-          </button>
+          </Link>
           
           <div className="flex items-center gap-1">
             <button 
               onClick={() => setIsFavorite(!isFavorite)}
               className="flex h-10 w-10 items-center justify-center active:scale-95 transition-transform outline-none focus:outline-none"
             >
-              <img src={isFavorite ? "/27_icon_heart_filled.png" : "/28_icon_heart_outline.png"} alt="Fav" className="w-6 h-6 invert opacity-100 drop-shadow-sm" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill={isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cn("transition-all duration-300 drop-shadow-[0_0_8px_var(--lime)]", isFavorite ? "text-lime scale-110" : "text-white hover:text-lime")}>
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+              </svg>
             </button>
             <button 
               onClick={() => navigate({ to: "/cart" })} 
@@ -193,7 +195,7 @@ function ProductDetail() {
         <NeonButton 
           size="lg" 
           onClick={handleAddToCart}
-          className="flex-1 h-14 text-[15px] font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.4)] rounded-full uppercase tracking-wide"
+          className="flex-1 h-14 text-[16px] font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.4)] rounded-full"
         >
           Agregar al Carrito
         </NeonButton>

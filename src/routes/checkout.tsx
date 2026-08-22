@@ -55,12 +55,12 @@ function Checkout() {
         </div>
         
         <header className="relative z-10 flex justify-between items-center px-4 py-4 pt-safe mb-2">
-          <button
-            onClick={() => navigate({ to: "/" })}
-            className="flex h-10 w-10 items-center justify-center text-foreground"
+          <Link
+            to="/"
+            className="flex h-10 w-10 items-center justify-center text-foreground outline-none focus:outline-none focus:ring-0 active:scale-95 transition-transform"
           >
             <span className="text-xl font-bold">&lt;</span>
-          </button>
+          </Link>
           <span className="font-bold text-foreground">Seguimiento</span>
           <div className="w-10"></div>
         </header>
@@ -158,12 +158,12 @@ function Checkout() {
   return (
     <div className="flex min-h-screen flex-col bg-background pb-40 overflow-x-hidden">
       <header className="flex items-center justify-center relative py-4 pt-safe mb-4">
-        <button
-          onClick={() => navigate({ to: "/cart" })}
-          className="absolute left-4 flex h-10 w-10 items-center justify-center text-foreground"
+        <Link
+          to="/cart"
+          className="absolute left-4 flex h-10 w-10 items-center justify-center text-foreground outline-none focus:outline-none focus:ring-0 active:scale-95 transition-transform"
         >
           <span className="text-xl font-bold">&lt;</span>
-        </button>
+        </Link>
         <h1 className="text-lg font-bold text-foreground">Confirmar pedido</h1>
       </header>
 

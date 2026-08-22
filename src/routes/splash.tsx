@@ -56,10 +56,13 @@ function Splash() {
       </div>
       
       {/* Bottom Text and Actions */}
-      <div className="z-10 flex flex-col items-center w-full text-center pb-8">
-        <h2 className="text-2xl text-lime font-bold mb-8 uppercase tracking-wider drop-shadow-md">
-          Bienvenido
+      <div className="z-10 flex flex-col items-center w-full text-center pb-8 mt-2">
+        <h2 className="text-3xl text-lime font-bold tracking-wider drop-shadow-[0_0_8px_var(--lime)]">
+          Bienvenido 420
         </h2>
+        <p className="text-sm font-bold tracking-widest text-white/70 mt-1 mb-8">
+          Tienda Oficial
+        </p>
 
         <div className="flex flex-col gap-4 w-full">
           <NeonButton 
@@ -135,8 +138,8 @@ function Splash() {
                   className="w-full h-14 text-black text-lg font-bold bg-lime rounded-full shadow-[0_0_15px_rgba(163,230,53,0.4)] relative z-10 active:scale-95 transition-transform flex items-center justify-center outline-none focus:outline-none focus:ring-2 focus:ring-lime focus:ring-offset-2 focus:ring-offset-background"
                 >
                   <span className="relative z-10">{loading ? "ENTRANDO..." : "ENTRAR"}</span>
-                  <div className="absolute top-[92%] left-4 right-4 z-0 text-lime pointer-events-none opacity-100">
-                    <SlimeDivider className="h-4 w-full" />
+                  <div className="absolute top-[92%] left-4 right-4 z-0 pointer-events-none opacity-100">
+                    <SlimeDivider className="h-4 w-full text-lime" />
                   </div>
                 </button>
               </div>
