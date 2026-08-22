@@ -186,6 +186,29 @@ function Checkout() {
           </div>
         </div>
         
+        {/* Delivery Address */}
+        <div className="mb-6 rounded-[1.5rem] p-5 border border-lime/30 bg-black relative overflow-hidden shadow-[0_0_15px_rgba(163,230,53,0.1)]">
+          {/* Map background effect */}
+          <div className="absolute inset-0 z-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--lime) 1px, transparent 1px)', backgroundSize: '16px 16px', backgroundPosition: '0 0' }}></div>
+          <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none"></div>
+          <img src="/60_tracking_pin.png" className="absolute right-4 bottom-4 w-12 h-12 opacity-20 filter grayscale" alt="Map" />
+          
+          <div className="relative z-10 flex items-start justify-between mb-3">
+            <h3 className="font-bold text-white flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-lime animate-pulse"></span>
+              Dirección de entrega
+            </h3>
+            <button className="flex h-8 w-8 items-center justify-center rounded-full bg-black/50 backdrop-blur border border-lime/20 active:scale-95 text-white hover:text-lime transition-colors pb-1.5 font-bold tracking-widest leading-none outline-none focus:outline-none">
+              ...
+            </button>
+          </div>
+          <div className="relative z-10 flex flex-col pl-4 border-l-2 border-lime/30 ml-1">
+            <span className="font-bold text-lime text-sm">Casa</span>
+            <span className="text-sm text-white font-medium mt-1">Carrera 43A # 1-50, El Poblado</span>
+            <span className="text-xs text-lime/70 mt-0.5">Medellín, Antioquia</span>
+          </div>
+        </div>
+
         {/* Delivery Options */}
         <div className="mb-6">
           <h3 className="font-bold text-foreground mb-3 px-1">Método de envío</h3>
@@ -228,7 +251,7 @@ function Checkout() {
                 </div>
                 <div>
                   <div className="font-bold text-foreground text-sm flex items-center gap-2">
-                    Delivery Express
+                    Domicilio Express
                     <span className="px-1.5 py-0.5 rounded text-[9px] bg-lime text-black font-black uppercase">Fast</span>
                   </div>
                   <div className="text-xs text-muted-foreground">10-15 minutos</div>

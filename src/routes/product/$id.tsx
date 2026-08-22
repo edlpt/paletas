@@ -55,7 +55,7 @@ function ProductDetail() {
         <div className="relative z-20 flex items-center justify-between p-5">
           <button
             onClick={() => navigate({ to: "/" })}
-            className="flex h-10 w-10 items-center justify-start text-white active:scale-95 transition-transform"
+            className="flex h-10 w-10 items-center justify-start text-white active:scale-95 transition-transform outline-none focus:outline-none focus:ring-0"
           >
             <span className="text-3xl font-bold">&lt;</span>
           </button>
@@ -63,17 +63,23 @@ function ProductDetail() {
           <div className="flex items-center gap-1">
             <button 
               onClick={() => setIsFavorite(!isFavorite)}
-              className="flex h-10 w-10 items-center justify-center active:scale-95 transition-transform"
+              className="flex h-10 w-10 items-center justify-center active:scale-95 transition-transform outline-none focus:outline-none"
             >
               <img src={isFavorite ? "/27_icon_heart_filled.png" : "/28_icon_heart_outline.png"} alt="Fav" className="w-6 h-6 invert opacity-100 drop-shadow-sm" />
             </button>
             <button 
               onClick={() => navigate({ to: "/cart" })} 
-              className="relative flex h-10 w-10 items-center justify-center active:scale-95 transition-transform"
+              className="relative flex h-10 w-10 items-center justify-center active:scale-95 transition-transform outline-none focus:outline-none"
             >
-              <img src="/22_icon_bag.png" alt="Cart" className="w-6 h-6 invert opacity-100 drop-shadow-sm" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-lime drop-shadow-[0_0_8px_var(--lime)]">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                <path d="M3 6h18" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
               {cartItemCount > 0 && (
-                <span className="absolute top-1 right-1 flex h-3 w-3 rounded-full bg-lime border-2 border-black" />
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-lime border-2 border-black text-[9px] font-bold text-black">
+                  {cartItemCount}
+                </span>
               )}
             </button>
           </div>
@@ -170,16 +176,16 @@ function ProductDetail() {
       </div>
 
       {/* Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 w-full bg-surface p-5 pb-safe z-50 border-t border-border flex items-center gap-3">
+      <div className="fixed bottom-0 left-0 w-full bg-surface p-5 pb-safe z-50 border-t border-border flex items-center gap-4">
         
-        {/* Quantity Selector - Moved here */}
-        <div className="flex items-center gap-4 rounded-[1rem] bg-surface-2 px-3 h-14 border border-white/5 shadow-inner">
-          <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="flex h-8 w-8 items-center justify-center opacity-80 active:scale-95 transition-transform">
-            <img src="/26_icon_minus.png" className="w-3 h-3" alt="-" />
+        {/* Quantity Selector */}
+        <div className="flex items-center gap-5 rounded-full bg-surface-2 px-5 h-14 border border-white/5 shadow-inner">
+          <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="flex h-10 w-10 items-center justify-center opacity-80 hover:opacity-100 active:scale-95 transition-all outline-none focus:outline-none">
+            <img src="/26_icon_minus.png" className="w-4 h-4" alt="-" />
           </button>
-          <span className="text-base font-bold text-foreground w-4 text-center">{quantity}</span>
-          <button onClick={() => setQuantity(quantity + 1)} className="flex h-8 w-8 items-center justify-center opacity-80 active:scale-95 transition-transform">
-            <img src="/25_icon_plus.png" className="w-3 h-3" alt="+" />
+          <span className="text-lg font-bold text-foreground w-4 text-center">{quantity}</span>
+          <button onClick={() => setQuantity(quantity + 1)} className="flex h-10 w-10 items-center justify-center opacity-80 hover:opacity-100 active:scale-95 transition-all outline-none focus:outline-none">
+            <img src="/25_icon_plus.png" className="w-4 h-4" alt="+" />
           </button>
         </div>
 
@@ -187,12 +193,9 @@ function ProductDetail() {
         <NeonButton 
           size="lg" 
           onClick={handleAddToCart}
-          className="flex-1 h-14 text-sm font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.3)] rounded-[1rem]"
+          className="flex-1 h-14 text-[15px] font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.4)] rounded-full uppercase tracking-wide"
         >
-          <div className="flex items-center justify-center gap-2">
-            <img src="/22_icon_bag.png" className="w-4 h-4" alt="Cart" />
-            <span className="text-sm uppercase tracking-wide">Agregar al Carrito</span>
-          </div>
+          Agregar al Carrito
         </NeonButton>
 
       </div>

@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { PsychedelicBanner } from "@/components/brand/PsychedelicBanner";
 import { CategoryBubble } from "@/components/brand/CategoryBubble";
 import { ProductCard } from "@/components/brand/ProductCard";
 import { useState } from "react";
 import { MOCK_PRODUCTS } from "@/lib/products";
+import { useCart } from "@/contexts/CartContext";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -20,6 +21,9 @@ const CATEGORIES = [
 
 function Index() {
   const [activeCategoryId, setActiveCategoryId] = useState("1");
+  const navigate = useNavigate();
+  const { items } = useCart();
+  const cartItemCount = items.length;
   
   const filteredProducts = MOCK_PRODUCTS.filter(
     p => p.categoryId === activeCategoryId
@@ -30,9 +34,23 @@ function Index() {
       {/* Header & Search */}
       <div className="mt-4 flex items-center justify-between">
         <h1 className="text-3xl font-bold text-foreground">¿Qué buscas hoy?</h1>
-        <button className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2 border border-slime/20 shadow-glow-sm">
-          <img src="/29_icon_bell.png" alt="Notificaciones" className="w-5 h-5 opacity-80" />
-        </button>
+        <div className="flex items-center gap-3">
+          <button className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2 border border-slime/20 shadow-glow-sm relative active:scale-95 transition-transform" onClick={() => navigate({ to: "/cart" })}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-lime drop-shadow-[0_0_5px_var(--lime)]">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+              <path d="M3 6h18" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            {cartItemCount > 0 && (
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-lime border-2 border-black text-[9px] font-bold text-black">
+                {cartItemCount}
+              </span>
+            )}
+          </button>
+          <button className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2 border border-slime/20 shadow-glow-sm active:scale-95 transition-transform">
+            <img src="/29_icon_bell.png" alt="Notificaciones" className="w-5 h-5 opacity-80" />
+          </button>
+        </div>
       </div>
       
       <div className="mt-6 relative">

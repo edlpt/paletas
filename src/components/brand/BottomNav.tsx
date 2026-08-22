@@ -19,8 +19,9 @@ export function BottomNav() {
             <Link
               key={item.to}
               to={item.to}
+              style={{ WebkitTapHighlightColor: 'transparent' }}
               className={cn(
-                "flex flex-col items-center justify-center p-2 transition-all duration-300",
+                "flex flex-col items-center justify-center p-2 transition-all duration-300 outline-none focus:outline-none focus:ring-0 active:bg-transparent",
                 isActive ? "scale-110 drop-shadow-[0_0_10px_var(--lime)] opacity-100" : "opacity-50 hover:opacity-80"
               )}
             >

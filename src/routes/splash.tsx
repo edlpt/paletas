@@ -128,14 +128,17 @@ function Splash() {
                 </button>
               </div>
 
-              <div className="mt-2 relative">
-                <NeonButton type="submit" size="lg" className="w-full text-black font-bold bg-lime border-none shadow-[0_0_15px_rgba(163,230,53,0.4)] relative z-10" disabled={loading}>
-                  {loading ? "ENTRANDO..." : "ENTRAR"}
-                </NeonButton>
-                {/* Slime divider attached to the bottom of the button */}
-                <div className="absolute -bottom-3.5 left-4 right-4 z-0 text-lime overflow-hidden">
-                  <SlimeDivider className="h-4 w-full opacity-100" />
-                </div>
+              <div className="mt-2 relative group">
+                <button 
+                  type="submit" 
+                  disabled={loading}
+                  className="w-full h-14 text-black text-lg font-bold bg-lime rounded-full shadow-[0_0_15px_rgba(163,230,53,0.4)] relative z-10 active:scale-95 transition-transform flex items-center justify-center outline-none focus:outline-none focus:ring-2 focus:ring-lime focus:ring-offset-2 focus:ring-offset-background"
+                >
+                  <span className="relative z-10">{loading ? "ENTRANDO..." : "ENTRAR"}</span>
+                  <div className="absolute top-[92%] left-4 right-4 z-0 text-lime pointer-events-none opacity-100">
+                    <SlimeDivider className="h-4 w-full" />
+                  </div>
+                </button>
               </div>
             </form>
 

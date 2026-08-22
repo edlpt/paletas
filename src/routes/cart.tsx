@@ -83,11 +83,11 @@ function Cart() {
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground font-medium">Envío</span>
-              <span className="font-bold text-lime">Gratis</span>
+              <span className="font-bold text-foreground">$20.000</span>
             </div>
             <div className="border-t border-border mt-2 pt-2 flex justify-between">
               <span className="font-bold text-foreground">Total</span>
-              <span className="font-bold text-lime">${total.toLocaleString("es-CO")}</span>
+              <span className="font-bold text-lime">${(total + 20000).toLocaleString("es-CO")}</span>
             </div>
           </div>
 

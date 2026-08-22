@@ -228,3 +228,10 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Hide Edit with Lovable badge */
+#lovable-badge-container,
+.lovable-badge,
+[id*="lovable-badge"] {
+  display: none !important;
+}
