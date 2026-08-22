@@ -33,7 +33,7 @@ function Cart() {
           <div className="flex flex-col gap-4">
             {items.map((item) => (
               <div key={item.id} className="flex gap-4 items-center">
-                <div className="h-16 w-16 shrink-0 rounded-2xl bg-surface-2 p-2 border border-slime/20">
+                <div className="h-16 w-16 shrink-0 rounded-2xl bg-surface-2 p-2 border border-white/5">
                   <img src={item.imageUrl} alt={item.name} className="h-full w-full object-contain drop-shadow-md" />
                 </div>
                 

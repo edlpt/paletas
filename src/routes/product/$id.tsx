@@ -91,15 +91,15 @@ function ProductDetail() {
 
         {/* Stats */}
         <div className="mt-6 flex gap-3">
-          <div className="flex-1 rounded-2xl border border-slime/20 bg-surface-2 p-3 text-center">
+          <div className="flex-1 rounded-2xl bg-surface-2 border border-white/5 p-3 text-center">
             <p className="text-xs text-muted-foreground">THC</p>
             <p className="text-base font-bold text-foreground">{product.thc}%</p>
           </div>
-          <div className="flex-1 rounded-2xl border border-slime/20 bg-surface-2 p-3 text-center">
+          <div className="flex-1 rounded-2xl bg-surface-2 border border-white/5 p-3 text-center">
             <p className="text-xs text-muted-foreground">CBD</p>
             <p className="text-base font-bold text-foreground">{product.cbd}%</p>
           </div>
-          <div className="flex-1 rounded-2xl border border-slime/20 bg-surface-2 p-3 text-center">
+          <div className="flex-1 rounded-2xl bg-surface-2 border border-white/5 p-3 text-center">
             <p className="text-xs text-muted-foreground">Peso</p>
             <p className="text-base font-bold text-foreground">{product.weight}g</p>
           </div>
@@ -115,22 +115,22 @@ function ProductDetail() {
       </div>
 
       {/* Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 w-full bg-surface-2 p-5 pb-safe border-t border-border z-50">
+      <div className="fixed bottom-0 left-0 w-full bg-background p-5 pb-safe z-50">
         {/* Quantity Selector */}
         <div className="mb-4 flex items-center justify-center">
-          <div className="flex items-center gap-6 rounded-full bg-background px-4 py-2 border border-slime/20 shadow-glow">
+          <div className="flex items-center gap-6 rounded-full bg-surface-2 px-4 py-2 border border-white/5">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
               className="flex h-8 w-8 items-center justify-center active:scale-95 opacity-80"
             >
-              <img src="/26_icon_minus.png" alt="Menos" className="w-4 h-4" />
+              <img src="/26_icon_minus.png" alt="Menos" className="w-4 h-4 opacity-50 hover:opacity-100 transition-opacity" />
             </button>
             <span className="w-8 text-center text-lg font-bold text-foreground">{quantity}</span>
             <button
               onClick={() => setQuantity(quantity + 1)}
               className="flex h-8 w-8 items-center justify-center active:scale-95 opacity-80"
             >
-              <img src="/25_icon_plus.png" alt="Más" className="w-4 h-4" />
+              <img src="/25_icon_plus.png" alt="Más" className="w-4 h-4 opacity-50 hover:opacity-100 transition-opacity" />
             </button>
           </div>
         </div>
