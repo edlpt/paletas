@@ -131,10 +131,12 @@ function ProductDetail() {
 
       {/* Overlapping Image */}
       <div className="absolute top-[18vh] left-[-15%] w-[75%] max-w-[320px] z-30 pointer-events-none">
+        {/* Fake shadow for performance instead of CSS drop-shadow on alpha mask */}
+        <div className="absolute top-[10%] left-[10%] w-[90%] h-[90%] bg-black/80 blur-2xl rounded-full rotate-12 scale-125 pointer-events-none" />
         <img
           src={product.imageUrl}
           alt={product.name}
-          className="w-full h-auto object-contain drop-shadow-[20px_20px_30px_rgba(0,0,0,0.8)] rotate-12 scale-125"
+          className="w-full h-auto object-contain relative z-10 rotate-12 scale-125"
         />
       </div>
 
@@ -195,7 +197,7 @@ function ProductDetail() {
         <NeonButton 
           size="lg" 
           onClick={handleAddToCart}
-          className="flex-1 h-14 text-[16px] font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.4)] rounded-full"
+          className="flex-1 h-14 text-[16px] font-bold bg-lime text-black border-none shadow-[0_0_15px_rgba(163,230,53,0.4)] rounded-full tracking-normal"
         >
           Agregar al Carrito
         </NeonButton>

@@ -105,6 +105,13 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-tap-highlight-color: transparent;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
   }
 
   h1,
@@ -138,7 +145,6 @@
 @utility text-glow {
   text-shadow: 0 0 18px color-mix(in oklab, var(--slime) 60%, transparent);
 }
-
 @utility card-dark {
   background-color: var(--surface);
   border: 1px solid color-mix(in oklab, var(--slime) 12%, transparent);
