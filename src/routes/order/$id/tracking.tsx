@@ -20,31 +20,10 @@ function OrderTracking() {
         <h1 className="text-lg font-bold text-foreground">Seguimiento</h1>
       </header>
 
-      {/* Main Status Text */}
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-lime mb-2 drop-shadow-[0_0_15px_rgba(183,255,0,0.4)]">En camino</h2>
-        <p className="text-sm text-muted-foreground">Tu pedido está en camino</p>
-      </div>
-
-      {/* Map Graphic Area */}
-      <div className="relative flex-1 flex flex-col items-center justify-center min-h-[300px] mb-8">
-        <div className="relative w-full max-w-[280px]">
-          <img src="/61_tracking_line.png" alt="Ruta" className="w-full h-auto drop-shadow-[0_0_10px_var(--lime)]" />
-          
-          <img 
-            src="/60_tracking_pin.png" 
-            alt="Origen" 
-            className="absolute top-[-10%] right-[15%] w-10 h-10"
-          />
-          
-          <div className="absolute bottom-[-10%] left-[10%] bg-surface-2 rounded-full p-2 border border-slime">
-            <img 
-              src="/62_tracking_alien.png" 
-              alt="Repartidor" 
-              className="w-8 h-8 animate-pulse-glow"
-            />
-          </div>
-        </div>
+      {/* Success Header */}
+      <div className="relative z-10 flex-1 w-full flex flex-col items-center justify-center pt-2 pb-6">
+        <img src="/01_logo.png" alt="El De Las Paletas" className="w-48 h-auto object-contain mb-4 drop-shadow-[0_0_20px_var(--slime)]" />
+        <p className="text-sm text-lime font-bold uppercase tracking-widest">Pedido confirmado</p>
       </div>
 
       {/* Bottom Info Card */}
@@ -63,13 +42,13 @@ function OrderTracking() {
           
           <div className="flex items-center justify-between mt-2 pt-4 border-t border-border">
             <div>
-              <p className="text-muted-foreground mb-1">Mensajero</p>
-              <p className="text-foreground">Juan Esteban</p>
+              <p className="text-muted-foreground mb-1">Contacto</p>
+              <p className="text-foreground">Chatear con la tienda</p>
             </div>
             
-            <button className="flex items-center gap-2 bg-background px-4 py-2 rounded-full border border-slime/20">
-              <img src="/69_contact.png" alt="Contactar" className="w-5 h-5" />
-              <span className="font-bold text-foreground text-xs">Contactar</span>
+            <button className="flex items-center gap-2 rounded-full bg-lime px-5 py-2 text-xs font-bold text-black active:scale-95 shadow-[0_0_10px_var(--lime)]">
+              <img src="/40_icon_chat.png" className="w-4 h-4" alt="Chat" />
+              Chat
             </button>
           </div>
         </div>

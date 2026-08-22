@@ -16,6 +16,7 @@ function Checkout() {
   const [deliveryType, setDeliveryType] = useState<"normal" | "express">("normal");
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState<{sender: "store"|"me", text: string}[]>([]);
+  const [chatInput, setChatInput] = useState("");
 
   const deliveryCost = deliveryType === "express" ? 50000 : 20000;
   const finalTotal = total + deliveryCost;
@@ -31,10 +32,19 @@ function Checkout() {
       // simulate instant message from store
       setTimeout(() => {
         setChatMessages([
-          { sender: "store", text: "¿Qué más parcero? Tu pedido llega aproximadamente en 30 minutos." }
+          { 
+            sender: "store", 
+            text: `¿Qué más parcero? Tu pedido llega aproximadamente en ${deliveryType === "express" ? "15" : "30"} minutos.` 
+          }
         ]);
       }, 500);
     }
+  };
+
+  const sendMessage = () => {
+    if (!chatInput.trim()) return;
+    setChatMessages([...chatMessages, { sender: "me", text: chatInput }]);
+    setChatInput("");
   };
 
   if (step === "success") {
@@ -55,26 +65,10 @@ function Checkout() {
           <div className="w-10"></div>
         </header>
 
-        {/* SVG Map Area */}
-        <div className="relative z-10 w-full h-[35vh] flex flex-col items-center justify-center pt-6">
-          <img src="/01_logo.png" alt="El De Las Paletas" className="w-32 mb-2 drop-shadow-[0_0_15px_var(--slime)]" />
-          <p className="text-sm text-lime font-bold mb-8 uppercase tracking-widest">Pedido confirmado</p>
-          
-          <div className="absolute inset-0 top-1/3 flex justify-center pointer-events-none">
-            <svg viewBox="0 0 300 200" className="w-[80%] h-full overflow-visible">
-              <path 
-                d="M 20 150 Q 80 150 120 100 T 250 50" 
-                fill="none" 
-                stroke="var(--lime)" 
-                strokeWidth="4" 
-                strokeDasharray="8 8"
-                className="drop-shadow-[0_0_10px_var(--lime)]"
-              />
-              <circle cx="20" cy="150" r="8" fill="var(--lime)" className="drop-shadow-[0_0_10px_var(--lime)]" />
-              <circle cx="250" cy="50" r="12" fill="var(--surface-2)" stroke="var(--lime)" strokeWidth="4" className="drop-shadow-[0_0_10px_var(--lime)]" />
-              <image href="/25_icon_plus.png" x="242" y="42" width="16" height="16" />
-            </svg>
-          </div>
+        {/* Success Header */}
+        <div className="relative z-10 w-full flex flex-col items-center justify-center pt-12 pb-6">
+          <img src="/01_logo.png" alt="El De Las Paletas" className="w-48 h-auto object-contain mb-4 drop-shadow-[0_0_20px_var(--slime)]" />
+          <p className="text-sm text-lime font-bold uppercase tracking-widest">Pedido confirmado</p>
         </div>
 
         <div className="flex-1 flex flex-col items-center px-5 relative z-10 mt-8">
@@ -99,10 +93,10 @@ function Checkout() {
               </div>
               <button 
                 onClick={openChat}
-                className="flex items-center gap-2 rounded-full border border-slime/20 bg-background px-4 py-2 text-xs font-bold text-lime active:scale-95"
+                className="flex items-center gap-2 rounded-full bg-lime px-5 py-2 text-xs font-bold text-black active:scale-95 shadow-[0_0_10px_var(--lime)]"
               >
-                <img src="/40_icon_chat.png" className="w-4 h-4 invert opacity-80" alt="Contactar" />
-                Contactar
+                <img src="/40_icon_chat.png" className="w-4 h-4" alt="Chat" />
+                Chat
               </button>
             </div>
           </div>
@@ -142,9 +136,15 @@ function Checkout() {
                 <input 
                   type="text" 
                   placeholder="Escribe un mensaje..." 
+                  value={chatInput}
+                  onChange={(e) => setChatInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                   className="flex-1 bg-background border border-white/10 rounded-full px-4 py-3 text-sm focus:outline-none focus:border-lime text-white"
                 />
-                <button className="w-12 h-12 bg-lime rounded-full flex items-center justify-center shrink-0">
+                <button 
+                  onClick={sendMessage}
+                  className="w-12 h-12 bg-lime rounded-full flex items-center justify-center shrink-0 active:scale-95 transition-transform"
+                >
                   <span className="text-black font-bold transform rotate-90">^</span>
                 </button>
               </div>
